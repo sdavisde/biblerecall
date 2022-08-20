@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&display=swap');
+
+$Aboreto_font: 'Aboreto', cursive;
+
 $first_color: #fff;
 $second_color: #fff;
 $third_color: #fff;
@@ -37,18 +41,8 @@ $third_color_dark: rgb(255, 255, 255);
   flex-grow: 1;
 }
 
-.title a {
-  color: $second_color_dark;
-  text-decoration: none;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
-
 .title {
+  font-family: $Aboreto_font;
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
