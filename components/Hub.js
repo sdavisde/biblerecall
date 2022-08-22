@@ -1,31 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { app, database } from '../firebaseConfig'
-import { collection, getDocs } from 'firebase/firestore';
+import React, { useState, useEffect, useRef } from 'react';
 import AddButton from './AddButton';
 import Verse from './Verse';
+import Lightbox from './Lightbox'
 
 export default function Hub({...props}) {
     const [book, setBook] = useState('Genesis');
     const [chapter, setChapter] = useState(1);
     const [verse, setVerse] = useState(1);
     const [verseList, setVerseList] = useState([]);
-    
-    const dbInstance = collection(database, 'All Verses');
+    const [lightboxDisplay, setLightboxDisplay] = useState(false);
 
     useEffect(() => {
         getVerses();
-        console.log('in use effect')
     }, []);
 
+    let toggleDisplay = () => {
+        console.log(`lightbox display: ${lightboxDisplay}`)
+        setLightboxDisplay(!lightboxDisplay);
+    };
+
     let addVerse = (event) => {
+        console.log('added verse');
         // setLoading(true);
         event.preventDefault();
-        fetch(`/api/add_verse?book=${book}&${chapter}&${verse}`)
-            .then((res) => res.json())
-            .then((data) => {
-                loadVerses();
-            });
-    };
+        // fetch(`/api/add_verse?book=${book}&${chapter}&${verse}`)
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //         loadVerses();
+        //     });
+    }
 
     let getVerses = () => {
         // setLoading(true);
@@ -43,8 +46,24 @@ export default function Hub({...props}) {
             {verseList.map((verse, index) =>
                 <Verse key={index} book={verse.Book} chapter={verse.Chapter} verse={verse.Verse} text={verse.Text}/>
             )}
+
+            {
+                lightboxDisplay &&
+                (<Lightbox toggleDisplay={() => toggleDisplay()} formSubmitted={addVerse}>
+                    <h1>New Verse</h1>
+                    <select>
+                        <option>Genesis</option>
+                        <option>Exodus</option>
+                        <option>Leviticus</option>
+                    </select>
+                    <input placeholder='Chapter'></input>
+                    <input placeholder='Verse'></input>
+                    <textarea placeholder='Verse Text'/>
+                    <button onClick={addVerse}>Add Verse</button>
+                </Lightbox>)
+            }
             
-            <AddButton onClick={addVerse} />
+            <AddButton onClick={toggleDisplay} />
         </div>
 	);
 }

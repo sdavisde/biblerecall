@@ -1,0 +1,43 @@
+@import './Home.module.scss';
+
+$overlay_color: rgba(39, 39, 48, 0.5);
+$lightbox_color: rgb(0, 74, 87);
+
+.lightboxOverlay {
+    background-color: $overlay_color;
+    display: flex;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox {
+    position: relative;
+    background-color: $lightbox_color;
+    width: 30%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 12px 12px black;
+}
+
+.closeBtnContainer {
+    img {
+        position:absolute;
+        top: 0;
+        right: 0;
+        width: 5em;
+        height: 5em;
+    }
+}
+
+.closeBtn {
+    content: url('../assets/x_btn.png');
+}

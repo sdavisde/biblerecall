@@ -8,7 +8,6 @@ export default function handler(req, res) {
     const docs = getDocs(dbInstance)
         .then((data) => {
             data.docs.map((item) => {
-                console.log({ ...item.data(), id: item.id });
                 verses.push({ ...item.data(), id: item.id });
             })
 
