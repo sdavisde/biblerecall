@@ -35,7 +35,6 @@ export default function Hub({...props}) {
         fetch('api/retrieve_verses')
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setVerseList(data);
             })
     };
