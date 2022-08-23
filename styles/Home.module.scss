@@ -1,13 +1,7 @@
+@import './Colors.scss';
 @import url('https://fonts.googleapis.com/css2?family=Aboreto&display=swap');
 
 $Aboreto_font: 'Aboreto', cursive;
-
-$first_color: #fff;
-$second_color: #fff;
-$third_color: #fff;
-$first_color_dark: rgb(7, 23, 57);
-$second_color_dark: rgb(64, 179, 199);
-$third_color_dark: rgb(255, 255, 255);
 
 .container {
   padding: 0 2rem;
@@ -21,7 +15,6 @@ $third_color_dark: rgb(255, 255, 255);
   flex: 1;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
 }
 

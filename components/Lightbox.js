@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import styles from '../styles/Lightbox.module.scss'
+import CloseButton from './CloseButton'
 
 export default function Lightbox({ ...props }) {
 
 	return (
-        <>
-            {
-                <div className={styles.lightboxOverlay}>
-                    <div className={styles.lightbox}>
-                        <div className={styles.closeBtnContainer} onClick={props.toggleDisplay}>
-                            <img className={styles.closeBtn}/>
-                        </div>
-                        {props.children}
-                    </div>
-                </div>
-            }
-        </>
+        <div className={styles.lightboxOverlay}>
+            <div className={styles.lightbox}>
+                <CloseButton onClick={props.toggleDisplay}/>
+                {props.children}
+            </div>
+        </div>
 	);
 }

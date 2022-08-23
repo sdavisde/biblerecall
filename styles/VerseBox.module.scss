@@ -1,0 +1,32 @@
+@import './Colors.scss';
+
+.box {
+    display: flex;
+    width: 50vw;
+    height: 10vh;
+    justify-content: space-around;
+
+    border-radius: 12px;
+    border: 3px solid $second_color_dark;
+    margin-bottom: 2em;
+}
+
+.leftSection {
+    width: 85%;
+    display:flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 5px;
+
+    h3, p {
+        margin: 0.2em;
+    }
+}
+
+.rightSection {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

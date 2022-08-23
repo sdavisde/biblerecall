@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AddButton from './AddButton';
-import Verse from './Verse';
+import VerseBox from './VerseBox';
 import Lightbox from './Lightbox'
+import CloseButton from './CloseButton'
 
 export default function Hub({...props}) {
     const [book, setBook] = useState('Genesis');
@@ -43,7 +44,7 @@ export default function Hub({...props}) {
         <div>
             
             {verseList.map((verse, index) =>
-                <Verse key={index} book={verse.Book} chapter={verse.Chapter} verse={verse.Verse} text={verse.Text}/>
+                <VerseBox key={index} book={verse.Book} chapter={verse.Chapter} verse={verse.Verse} text={verse.Text}/>
             )}
 
             {

@@ -1,0 +1,9 @@
+.editBtn {
+    content: url('../assets/pencil.png');
+    width: 30px;
+    height: 30px;
+
+    &:hover {
+        content: url('../assets/pencil_hover.png');
+    }
+}

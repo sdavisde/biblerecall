@@ -19,25 +19,14 @@ $lightbox_color: rgb(0, 74, 87);
 
 .lightbox {
     position: relative;
-    background-color: $lightbox_color;
+    background-color: $first_color_dark;
     width: 30%;
     height: 50%;
     display: flex;
     flex-direction: column;
+    margin: 1em;
     border-radius: 15px;
-    box-shadow: 12px 12px black;
-}
-
-.closeBtnContainer {
-    img {
-        position:absolute;
-        top: 0;
-        right: 0;
-        width: 5em;
-        height: 5em;
-    }
-}
-
-.closeBtn {
-    content: url('../assets/x_btn.png');
-}
+    border: 3px solid $second_color_dark;
+    // box-shadow: 12px 12px black;
+    padding: 1em;
+}  

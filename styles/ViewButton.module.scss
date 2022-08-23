@@ -1,0 +1,9 @@
+.viewBtn {
+    content: url('../assets/eye.png');
+    width: 30px;
+    height: 30px;
+
+    &:hover {
+        content: url('../assets//eye_hover.png');
+    }
+}
