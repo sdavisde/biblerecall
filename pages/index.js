@@ -12,9 +12,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Bible Recall
-        </h1>
+        <div className={styles.title}>
+          <h1>Bible</h1>
+          <img className={styles.bible}/> 
+          <h1>Recall</h1>          
+        </div>
         <Hub/>
       </main>
       {/* <footer className={styles.footer}>
