@@ -4,7 +4,7 @@ import styles from '../styles/AddButton.module.scss'
 export default function AddButton({...props}) {
 
 	return (
-        <button onClick={props.onClick}>
+        <button className={styles.addBtn} onClick={props.onClick}>
             Add
         </button>
 	);

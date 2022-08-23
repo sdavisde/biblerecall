@@ -5,8 +5,9 @@ $Aboreto_font: 'Aboreto', cursive;
 
 .container {
   padding: 0 2rem;
-  background-color: $first_color_dark;
-  color: $third_color_dark;
+  background-color: $primary_background;
+  background-size:16px 16px;
+  color: $tertiary_color;
 }
 
 .main {
@@ -47,6 +48,6 @@ $Aboreto_font: 'Aboreto', cursive;
 .card:hover,
 .card:focus,
 .card:active {
-  color: $second_color_dark;
-  border-color: $second_color_dark;
+  color: $secondary_color;
+  border-color: $secondary_color;
 }

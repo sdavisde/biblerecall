@@ -1,0 +1,12 @@
+@import './Colors.scss';
+
+.addBtn {
+    color: black;
+    background-color: $secondary_color;
+    width: 10%;
+    height: 10%;
+
+    border: 3px solid $secondary_color;
+    border-radius: 5px;
+    cursor: pointer;
+}

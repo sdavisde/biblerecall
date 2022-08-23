@@ -19,14 +19,14 @@ $lightbox_color: rgb(0, 74, 87);
 
 .lightbox {
     position: relative;
-    background-color: $first_color_dark;
+    background-color: $primary_background;
     width: 30%;
     height: 50%;
     display: flex;
     flex-direction: column;
     margin: 1em;
     border-radius: 15px;
-    border: 3px solid $second_color_dark;
+    border: 3px solid $secondary_color;
     // box-shadow: 12px 12px black;
     padding: 1em;
 }  
