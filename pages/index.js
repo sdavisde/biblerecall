@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Hub from '../components/Hub.js'
+import Hub from '../components/Hub'
+import Groups from '../components/Groups'
 import styles from '../styles/Home.module.scss'
 
 export default function Home() {
@@ -12,15 +13,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.title}>
-          <h1>Bible</h1>
-          <img className={styles.bible}/> 
-          <h1>Recall</h1>          
+        <div className={styles.topSection}>
+          <div className={styles.title}>
+            <h1>Bible</h1>
+            <img className={styles.bible}/> 
+            <h1>Recall</h1>          
+          </div>
         </div>
-        <Hub/>
+        <div className={styles.bottomSection}>
+          <div className={styles.leftSection}>
+            <Groups />
+          </div>
+          <div className={styles.rightSection}>
+            <Hub/>
+          </div>
+        </div>
       </main>
-      {/* <footer className={styles.footer}>
-      </footer> */}
     </div>
   )
 }

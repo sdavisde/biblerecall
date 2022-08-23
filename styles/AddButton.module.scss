@@ -1,12 +1,13 @@
 @import './Colors.scss';
 
 .addBtn {
-    color: black;
-    background-color: $secondary_color;
+    color: $font-color;
+    background-color: $tertiary_background;
     width: 10%;
+    min-width: inherit;
     height: 10%;
 
-    border: 3px solid $secondary_color;
+    border: 3px solid $tertiary_background;
     border-radius: 5px;
     cursor: pointer;
 }

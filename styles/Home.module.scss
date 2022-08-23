@@ -1,53 +1,80 @@
 @import './Colors.scss';
-@import url('https://fonts.googleapis.com/css2?family=Aboreto&display=swap');
-
-$Aboreto_font: 'Aboreto', cursive;
+@import './Fonts.scss';
 
 .container {
   padding: 0 2rem;
   background-color: $primary_background;
   background-size:16px 16px;
-  color: $tertiary_color;
+  color: $font-color;
 }
 
 .main {
+  height: 100vh;
   min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .title {
   margin: 0;
   margin-bottom: 2em;
   display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
   h1 {
     font-family: $Aboreto_font;
     line-height: 1.15;
-    font-size: 4rem;
+    font-size: 5rem;
+    color: $dark-font-color;
+
+    margin-top:0;
   }
 
   .bible {
     content: url('../assets/bible.png');
     width:140px;
     height:90px;
-    margin-top: 5em;
-    margin-left: 8px;
+    margin: 0 1em 3em 1em;
   }
 }
 
-.title,
-.description {
-  text-align: center;
+.topSection {
+  display: flex;
+  align-items: center;
 }
 
+.bottomSection {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: $secondary_color;
-  border-color: $secondary_color;
+  margin-top: 1em;
+
+  .leftSection {
+    width: 10%;
+    height: 110%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px;
+    border-right: 2px solid $secondary_color;
+    border-top: 2px solid $secondary_color;
+  }
+  
+  .rightSection {
+    width: 90%;
+    height: 110%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-top: 2px solid $secondary_color;
+  }
 }

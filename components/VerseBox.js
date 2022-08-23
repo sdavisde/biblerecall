@@ -7,12 +7,12 @@ export default function VerseBox ({ book, chapter, verse, text }) {
     return (
         <div className={styles.box}>
             <div className={styles.leftSection}>
-                <h3>
+                <h1>
                     {book} {chapter} : {verse} <br/>
-                </h3>
-                <p>
+                </h1>
+                <h4>
                     {text}
-                </p>
+                </h4>
             </div>
             <div className={styles.rightSection}>
                 <ViewButton />

@@ -1,33 +1,36 @@
 @import './Colors.scss';
+@import './Fonts.scss';
 
 .box {
     display: flex;
     width: 50vw;
-    height: 10vh;
+    height: inherit;
     justify-content: space-around;
 
-    border-radius: 12px;
-    border: 3px solid $secondary_color;
+    border-radius: 5px;
+    border: 1px solid $secondary_color;
+    // box-shadow: 0 0 0.5em $secondary_color;
     margin-bottom: 2em;
 
-    background-color: $tertiary_background;
-    // color: black;
+    background-color: $secondary_background;
+    padding: 10px;
 }
 
 .leftSection {
-    width: 85%;
+    width: 95%;
     display:flex;
     justify-content: flex-start;
     flex-direction: column;
-    padding: 5px;
 
-    h3, p {
-        margin: 0.2em;
+    h1, h4 {
+        margin: 0.1em;
+        font-family: $annie_font;
+        font-style: bold;
     }
 }
 
 .rightSection {
-    width: 15%;
+    width: 5%;
     display: flex;
     flex-direction: column;
     justify-content: center;
