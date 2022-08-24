@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AddButton from './AddButton';
 import VerseBox from './VerseBox';
-import Lightbox from './Lightbox'
-import CloseButton from './CloseButton'
+import Lightbox from './Lightbox';
+import CloseButton from './CloseButton';
+import styles from '../styles/Hub.module.scss';
 
 export default function Hub({...props}) {
     const [book, setBook] = useState('Genesis');
@@ -24,11 +25,11 @@ export default function Hub({...props}) {
         console.log('added verse');
         // setLoading(true);
         event.preventDefault();
-        // fetch(`/api/add_verse?book=${book}&${chapter}&${verse}`)
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         loadVerses();
-        //     });
+        fetch(`/api/add_verse?book=${book}&${chapter}&${verse}`)
+            .then((res) => res.json())
+            .then((data) => {
+                getVerses();
+            });
     }
 
     let getVerses = () => {
@@ -36,21 +37,23 @@ export default function Hub({...props}) {
         fetch('api/retrieve_verses')
             .then((res) => res.json())
             .then((data) => {
+                console.log(data);
                 setVerseList(data);
             })
     };
 
     return (
-        <div>
+        <div>book={verse.book} chapter={verse.chapter} verse={verse.verse} text={verse.text}
             
             {verseList.map((verse, index) =>
-                <VerseBox key={index} book={verse.Book} chapter={verse.Chapter} verse={verse.Verse} text={verse.Text}/>
+                <VerseBox key={index} {...verse}/>
             )}
 
             {
-                lightboxDisplay &&
+                lightboxDisplay 
+                &&
                 (<Lightbox toggleDisplay={() => toggleDisplay()} formSubmitted={addVerse}>
-                    <h1>New Verse</h1>
+                    <h1 className={styles.Heading}>New Verse</h1>
                     <select>
                         <option>Genesis</option>
                         <option>Exodus</option>

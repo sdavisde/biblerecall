@@ -2,7 +2,6 @@
 @import './Fonts.scss';
 
 .container {
-  padding: 0 2rem;
   background-color: $primary_background;
   background-size:16px 16px;
   color: $font-color;
@@ -59,6 +58,7 @@
 
   .leftSection {
     width: 10%;
+    min-width: inherit;
     height: 110%;
     display: flex;
     flex-direction: column;

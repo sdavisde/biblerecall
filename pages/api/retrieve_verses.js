@@ -1,20 +1,27 @@
-import { app, database } from '../../firebaseConfig'
-import { collection, getDocs } from 'firebase/firestore';
+import { database } from '../../firebaseConfig';
+import { doc, getDocs, collection } from 'firebase/firestore';
               
 export default function handler(req, res) {
-    let verses = []
+    let verses = [];
 
-    const dbInstance = collection(database, 'All Verses');
-    const docs = getDocs(dbInstance)
-        .then((data) => {
-            data.docs.map((item) => {
-                verses.push({ ...item.data(), id: item.id });
-            })
+    let group = 'Group_2';
 
-            if (verses)
-                res.status(200).json(verses);
-            else
-                res.status(404).json({ text: 'Failed to Retrieve Verses' });
+    const versesRef = collection(database, 'sean_davis', group, 'verses');
+
+    getDocs(versesRef).then((snapshot) => {
+        snapshot.docs.map(doc => {
+            let verseData = doc.data();
+            console.log(`verse: ${JSON.stringify(verseData)}`) 
+
+            verses.push(verseData);
         });
+
+        if (verses)
+            res.status(200).json(verses);
+        else if (verses.count == 0)
+            res.status(403).json({ text: 'No Verses Found' });
+        else
+            res.status(404).json({ text: 'Failed to Retrieve Verses' });
+    });
 }
   
