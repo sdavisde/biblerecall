@@ -3,17 +3,22 @@
 
 .box {
     display: flex;
+    position: relative;
     width: 50vw;
     height: inherit;
     justify-content: space-around;
-
+    margin-bottom: 2em;
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid $secondary_color;
-    // box-shadow: 0 0 0.5em $secondary_color;
-    margin-bottom: 2em;
 
     background-color: $secondary_background;
-    padding: 10px;
+
+    transition: 0.1s;
+
+    &:hover {
+        background-color: $secondary_background_faded;
+    }
 }
 
 .leftSection {

@@ -25,7 +25,7 @@ export default function handler(req, res) {
 
     const collectionRef = collection(database, `sean_davis/${group}/verses`);
     const verse = CreateVerse(newVerse.book, newVerse.chapter, newVerse.verse, newVerse.text);
-    console.log(`adding verse: ${verse} to collection `)
+    console.log(`adding verse: ${JSON.stringify(verse)} to collection `)
     addDoc(collectionRef, verse);
 
     res.status(200).json({ text: 'Added verse Successfully' });

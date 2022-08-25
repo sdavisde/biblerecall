@@ -11,6 +11,7 @@ export default function Hub({...props}) {
     const [verse, setVerse] = useState(1);
     const [verseList, setVerseList] = useState([]);
     const [groups, setGroups] = useState([]);
+    const [currentGroup, setCurrentGroup] = useState('');
     const [lightboxDisplay, setLightboxDisplay] = useState(false);
 
     useEffect(() => {
@@ -18,21 +19,20 @@ export default function Hub({...props}) {
     }, []);
 
     let toggleDisplay = () => {
-        console.log(`lightbox display: ${lightboxDisplay}`)
         setLightboxDisplay(!lightboxDisplay);
     };
 
     let refreshGroups = () => {
-        fetch('api/collections')
+        fetch('api/groups')
             .then((res) => res.json())
             .then((data) => {
+                setCurrentGroup(data[0].groupName ?? '');
                 setGroups(data);
             })
     };
 
     let deleteVerse = (id) => {
-        console.log(id);
-        fetch(`/api/delete_verse?id=${id}`)
+        fetch(`/api/delete_verse?id=${id}&group=${currentGroup}`)
             .then((res) => res.json())
             .then((data) => {
                 getVerses();
@@ -42,10 +42,11 @@ export default function Hub({...props}) {
     let addVerse = (event) => {
         // setLoading(true);
         event.preventDefault();
-        fetch(`/api/add_verse?book=${book}&${chapter}&${verse}`)
+        fetch(`/api/add_verse?book=${book}&chapter=${chapter}&verse=${verse}`)
             .then((res) => res.json())
             .then((data) => {
                 getVerses();
+                toggleDisplay();
             });
     };
 
@@ -63,13 +64,13 @@ export default function Hub({...props}) {
         <>
             <div className={styles.leftSection}>
                 {groups.map((group, index) => 
-                    <div>
-                        <h2 key={index} className={styles.groupLabel}>
+                    <div key={index}>
+                        <h2 key={group.groupName + index} className={styles.groupLabel}>
                             {group.groupName}
                         </h2>
-                        <div key={index + 1000} className={styles.verses}>
+                        <div key={index} className={styles.verses}>
                             {group.verses.map((verse, index_2) => 
-                                <h4 key={index_2} className={styles.verse}>{verse.book} {verse.chapter}:{verse.verse}</h4>
+                                <h4 key={verse.book + verse.chapter + verse.verse + index_2} className={styles.verse}>{verse.book} {verse.chapter}:{verse.verse}</h4>
                             )}
                         </div>
                     </div>
