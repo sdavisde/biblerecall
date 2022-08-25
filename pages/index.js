@@ -5,6 +5,11 @@ import Groups from '../components/Groups'
 import styles from '../styles/Home.module.scss'
 
 export default function Home() {
+
+  let refreshGroups = () => {
+
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -21,12 +26,7 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.bottomSection}>
-          <div className={styles.leftSection}>
-            <Groups />
-          </div>
-          <div className={styles.rightSection}>
-            <Hub/>
-          </div>
+          <Hub refreshGroups={refreshGroups}/>
         </div>
       </main>
     </div>

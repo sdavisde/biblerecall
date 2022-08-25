@@ -55,26 +55,4 @@
   align-items: center;
 
   margin-top: 1em;
-
-  .leftSection {
-    width: 10%;
-    min-width: inherit;
-    height: 110%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding: 10px;
-    border-right: 2px solid $secondary_color;
-    border-top: 2px solid $secondary_color;
-  }
-  
-  .rightSection {
-    width: 90%;
-    height: 110%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border-top: 2px solid $secondary_color;
-  }
 }

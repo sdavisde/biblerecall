@@ -11,9 +11,7 @@ export default function handler(req, res) {
     getDocs(versesRef).then((snapshot) => {
         snapshot.docs.map(doc => {
             let verseData = doc.data();
-            console.log(`verse: ${JSON.stringify(verseData)}`) 
-
-            verses.push(verseData);
+            verses.push({...verseData, id: doc.id});
         });
 
         if (verses)
