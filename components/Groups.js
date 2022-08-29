@@ -18,7 +18,7 @@ export default function Groups({...props}) {
 	return (
         <>
             {groups.map((group, index) => 
-                <div>
+                <div key={index}>
                     <h2 key={index} className={styles.groupLabel}>
                         {group.groupName}
                     </h2>

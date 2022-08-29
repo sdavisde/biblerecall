@@ -19,7 +19,7 @@ export default function handler(req, res) {
                             });
                         }).then(() => {
                             groups.push({ groupName: group.id, verses: verses });
-                    
+
                             if (groups)
                                 res.status(200).json(groups);
                             else if (groups.count == 0)

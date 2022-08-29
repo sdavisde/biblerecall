@@ -14,20 +14,26 @@ function CreateVerse(book, chapter, verse, text) {
 }
 
 export default function handler(req, res) {
-    let newVerse = {
-        book: 'Genesis',
-        chapter: 1,
-        verse: 1,
-        text: 'In the beginning, God created the world.'
-    };
+    const query = req.query;
+    const { book, chapter, verseNumber, text, group } = query;
 
-    let group = 'Group_2';
+    let newVerse = {
+        book: book,
+        chapter: chapter,
+        verse: verseNumber,
+        text: text
+    };
 
     const collectionRef = collection(database, `sean_davis/${group}/verses`);
     const verse = CreateVerse(newVerse.book, newVerse.chapter, newVerse.verse, newVerse.text);
-    console.log(`adding verse: ${JSON.stringify(verse)} to collection `)
-    addDoc(collectionRef, verse);
+    console.log(`adding verse: ${JSON.stringify(verse)} to collection `);
 
-    res.status(200).json({ text: 'Added verse Successfully' });
+    addDoc(collectionRef, verse)
+        .then(() => {
+            res.status(200).json({ text: 'Added verse Successfully' });
+        }).catch(error => {
+            res.status(405).json(error);
+        });
+
 }
   
