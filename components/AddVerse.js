@@ -77,43 +77,46 @@ export default function AddVerse({ formSubmitted }) {
                 break;
             case 'chapter':
                 if (chapters.includes(e.target.value)) {
+                    console.log(`chapter exists: ${e.target.value}`);
                     chapterSelected(bookId, e.target.value);
                     break;
+                } else {
+                    console.log(`chapter does not exist: ${e.target.value}`);
                 }
         }
     };
 
     return (
-        <>
+        <div className={styles.container}>
             <h1 className={styles.Heading}>New Verse</h1>
-            <select name="group" onChange={onChange}>
-                {groups.map((group, key) => 
-                    <option key={key}>{group.groupName}</option>
-                )}
-            </select>
-            <input name="book" onChange={onChange} defaultValue={verse.book} list="books"/>
-            <datalist id="books">
-                {books.map((book, key) =>
-                    <option key={key} id={book.id}>{book.name}</option>
-                )}
-            </datalist>
-            <select name="chapter" onChange={onChange} defaultValue={verse.chapter}>
-            {/* <datalist> */}
-                {chapters.map((chapter, key) =>
-                    <option key={key}>{chapter.id}</option>
-                )}
-            {/* </datalist> */}
-            </select>
-            <select name="verse" onChange={onChange} defaultValue={verse.verse}>
-            {/* <datalist> */}
-                {verseList.map((verse, key) =>
-                    <option key={key}>{verse.verseId}</option>
-                )}
-            {/* </datalist> */}
-            </select>
-            <button onClick={setVerseText}>Import Verse Text</button>
-            <textarea name="text" placeholder='Verse Text' defaultValue={verse.text} disabled={true}/>
-            <button onClick={addVerse}>Add Verse</button>
-        </>
+            <div className={styles.row}>
+                <input name="book" onChange={onChange} defaultValue={verse.book} list="books" className={styles.book}/>
+                <datalist id="books">
+                    {books.map((book, key) =>
+                        <option key={key} id={book.id}>{book.name}</option>
+                    )}
+                </datalist>
+                <select name="chapter" onChange={onChange} defaultValue={verse.chapter} className={styles.numList}>
+                    {chapters.map((chapter, key) =>
+                        <option key={key}>{chapter.id}</option>
+                    )}
+                </select>
+                <select name="verse" onChange={onChange} defaultValue={verse.verse} className={styles.numList}>
+                    {verseList.map((verse, key) =>
+                        <option key={key}>{verse.verseId}</option>
+                    )}
+                </select>
+            </div>
+            <div className={styles.row}>
+                <select name="group" onChange={onChange} className={styles.groups}>
+                    {groups.map((group, key) => 
+                        <option key={key}>{group.groupName}</option>
+                    )}
+                </select>
+                <button onClick={setVerseText} className={styles.searchBtn}>Search</button>
+            </div>
+            <textarea name="text" placeholder='Verse Text' defaultValue={verse.text} disabled={true} className={styles.verseText}/>
+            <button onClick={addVerse} className={styles.addBtn}>Add Verse</button>
+        </div>
 	);
 }
