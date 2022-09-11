@@ -52,7 +52,7 @@ export default function Hub({...props}) {
 
     return (
         <>
-            <div className={styles.leftSection}>
+            {/* <div className={styles.leftSection}>
                 {groups.map((group, index) => 
                     <div key={index}>
                         <h2 key={group.groupName + index} className={styles.groupLabel}>
@@ -67,8 +67,8 @@ export default function Hub({...props}) {
                         </div>
                     </div>
                 )}
-            </div>
-            <div className={styles.rightSection}>
+            </div> */}
+            <div className={styles.verseList}>
                 <div>
                     {verseList.map((verse, index) =>
                         <VerseBox key={index} verse={verse} remove={deleteVerse} view={() => toggleDisplay('Edit')}/>

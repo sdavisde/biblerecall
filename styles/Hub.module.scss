@@ -12,14 +12,13 @@
     border-top: 2px solid $secondary_color;
 }
 
-.rightSection {
-    width: 90%;
-    height: 110%;
+.verseList {
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
-    border-top: 2px solid $secondary_color;
+    // border-top: 2px solid $secondary_color;
 }
 
 .groupLabel {

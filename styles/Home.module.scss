@@ -1,5 +1,6 @@
 @import './Colors.scss';
 @import './Fonts.scss';
+@import './Breakpoints.scss';
 
 .container {
   background-color: $primary_background;
@@ -28,17 +29,29 @@
   h1 {
     font-family: $Aboreto_font;
     line-height: 1.15;
-    font-size: 5rem;
+    font-size: 260%;
     color: $dark-font-color;
 
     margin-top:0;
+
+    @media screen and (min-width: $bp-desktop) {
+      font-size: 300%;
+    }
   }
 
   .bible {
     content: url('../assets/bible.png');
-    width:140px;
-    height:90px;
-    margin: 0 1em 3em 1em;
+    width: 19%;
+    aspect-ratio: 1.5/1;
+    margin: 0 1% 1% 1%;
+
+    @media screen and (min-width: $bp-tablet) {
+      width: 10%;
+    }
+
+    @media screen and (min-width: $bp-desktop) {
+      width: 7%;
+    }
   }
 }
 
@@ -52,7 +65,7 @@
   height: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
 
   margin-top: 1em;
 }
