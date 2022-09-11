@@ -1,6 +1,6 @@
 import styles from '../styles/AddVerse.module.scss';
 import React, { useState, useEffect } from 'react';
-import { GetGroups, GetBooks, GetChapters, GetVerses, AddNewVerse } from '../middleware/verse';
+import { GetGroups, GetBooks, GetChapters, GetVerses, GetVerseText, AddNewVerse } from '../middleware/verse';
 
 export default function AddVerse({ formSubmitted }) {
     const [groups, setGroups] = useState([]);
@@ -10,8 +10,8 @@ export default function AddVerse({ formSubmitted }) {
     const [verseList, setVerseList] = useState([]);
     const [verse, setVerse] = useState({
         book: 'Genesis',
-        chapter: 1,
-        verse: 1,
+        chapterId: 1,
+        verseId: 1,
         text: '',
         group: ''
     });
@@ -41,22 +41,24 @@ export default function AddVerse({ formSubmitted }) {
             });
     };
 
-    let setVerseText = () => {
-        fetch(`/api/retrieve_verseText`)
+    let setVerseText = (verseId) => {
+        const target = verseList.find((v) => v.verseId == verseId);
+        console.log(target);
+        setVerse(prev => ({...prev, verseId: target.verseId, text: target.verse }));
     }
 
     let bookSelected = (id) => {
         GetChapters(id).then((data) => {
             setChapters(data)
         });
-        setVerse(prev => ({...prev, chapter: 1, verse: 1 }));
+        setVerse(prev => ({...prev, chapterId: 1, verseId: 1 }));
     }
 
     let chapterSelected = (book_id, chapter_id) => {
         GetVerses(book_id, chapter_id).then((data) => {
             setVerseList(data)
         });
-        setVerse(prev => ({...prev, verse: 1 }));
+        setVerse(prev => ({...prev, chapterId: chapter_id, verseId: 1 }));
     }
 
     let onChange = (e) => {
@@ -73,16 +75,23 @@ export default function AddVerse({ formSubmitted }) {
                     bookSelected(book.id);
                 } else {
                     console.log('Book does not exist');
+                    console.log(books);
                 }
                 break;
             case 'chapter':
-                if (chapters.includes(e.target.value)) {
+                let chapter = chapters.find(chapter => chapter.id === parseInt(e.target.value));
+                if (chapter) {
                     console.log(`chapter exists: ${e.target.value}`);
                     chapterSelected(bookId, e.target.value);
                     break;
                 } else {
                     console.log(`chapter does not exist: ${e.target.value}`);
+                    console.log(chapters);
                 }
+            case 'verse':
+                let verseId = parseInt(e.target.value);
+                console.log(verseId);
+                setVerseText(verseId);
         }
     };
 
@@ -115,7 +124,7 @@ export default function AddVerse({ formSubmitted }) {
                 </select>
                 <button onClick={setVerseText} className={styles.searchBtn}>Search</button>
             </div>
-            <textarea name="text" placeholder='Verse Text' defaultValue={verse.text} disabled={true} className={styles.verseText}/>
+            <textarea name="text" placeholder='Verse Text' value={verse.text} disabled={true} className={styles.verseText}/>
             <button onClick={addVerse} className={styles.addBtn}>Add Verse</button>
         </div>
 	);
