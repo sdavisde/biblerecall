@@ -1,4 +1,5 @@
 @import './Fonts.scss';
+@import './Colors.scss';
 
 html,
 body {
@@ -6,6 +7,10 @@ body {
   margin: 0;
   // -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
   //   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+html {
+  background-color: $primary_background;
 }
 
 a {

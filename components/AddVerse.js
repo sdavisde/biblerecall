@@ -1,7 +1,7 @@
 import styles from '../styles/AddVerse.module.scss';
 import React, { useState, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { GetGroups, GetBooks, GetChapters, GetVerses, GetVerseText, AddNewVerse } from '../middleware/verse';
+import { GetGroups, GetBooks, GetChapters, GetVerses, AddNewVerse } from '../middleware/verse';
 
 export default function AddVerse({ formSubmitted }) {
     const [groups, setGroups] = useState([]);

@@ -1,10 +1,11 @@
 @import './Colors.scss';
 @import './Fonts.scss';
+@import './Breakpoints.scss';
 
 .box {
     display: flex;
     position: relative;
-    width: 50vw;
+    width: 65vw;
     height: inherit;
     justify-content: space-around;
     margin-bottom: 2em;
@@ -19,6 +20,10 @@
     &:hover {
         background-color: $secondary_background_faded;
     }
+
+    @media screen and (min-width: $bp-tablet) {
+        width: 50vw;
+    }
 }
 
 .leftSection {
@@ -27,7 +32,7 @@
     justify-content: flex-start;
     flex-direction: column;
 
-    h1, h4 {
+    h1, h2, h3, h4 {
         margin: 0.1em;
         font-family: $annie_font;
         font-style: bold;

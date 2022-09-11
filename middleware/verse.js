@@ -20,5 +20,5 @@ export function GetVerseText(bookId, chapterId, verseId) {
 
 export function AddNewVerse(verse) {
     const { book, chapterId, verseId, text, group } = verse;
-    return fetch(`/api/add_verse?book=${book}&chapter=${chapterId}&verseNumber=${verse}&text=${text}&group=${group}`).then((res) => res.json());
+    return fetch(`/api/add_verse?book=${book}&chapter=${chapterId}&verseNumber=${verseId}&text=${text}&group=${group}`).then((res) => res.json());
 }

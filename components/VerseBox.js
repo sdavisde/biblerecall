@@ -18,9 +18,9 @@ export default function VerseBox ({ verse, remove, view }) {
                 <h1>
                     {verse.book} {verse.chapter} : {verse.verse} <br/>
                 </h1>
-                <h4>
+                <h3>
                     {verse.text}
-                </h4>
+                </h3>
             </div>
             <div className={styles.rightSection}>
                 {
