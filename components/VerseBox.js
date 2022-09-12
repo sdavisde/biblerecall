@@ -12,7 +12,7 @@ export default function VerseBox ({ verse, remove, view }) {
         <div className={styles.box} 
             onMouseEnter={() => setDeleteBtnVisible(true)}
             onMouseLeave={() => setDeleteBtnVisible(false)}
-            onClick={view}
+            onClick={() => view(verse)}
         >
             <div className={styles.leftSection}>
                 <h1>
@@ -26,7 +26,7 @@ export default function VerseBox ({ verse, remove, view }) {
                 {
                     deleteBtnVisible
                         &&
-                    <DeleteButton onClick={(e) => {remove(verse.id, e);}}/>
+                    <DeleteButton onClick={(e) => remove(verse.id, e)}/>
                 }
                 <EditButton />
             </div>

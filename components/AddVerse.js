@@ -109,10 +109,6 @@ export default function AddVerse({ formSubmitted }) {
                     placeholder='Verse Text' 
                     value={verse.text} 
                     spellCheck="false"
-                    onChange={(e) => {
-                        e.target.style.height = 0;
-                        e.target.style.height = (e.target.scrollHeight) + "px";
-                    }} 
                     className={styles.verseText}/>
             </div>
             <button onClick={addVerse} className={styles.addBtn}>Add Verse</button>

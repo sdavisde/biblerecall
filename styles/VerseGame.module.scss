@@ -1,0 +1,29 @@
+@import './Colors.scss';
+@import './Fonts.scss';
+
+.container {
+    h1, h2, h3, h4, h5, h6 {
+        color: $dark-font-color;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .verseText {
+        width: 100%;
+        color: $darker-font-color;
+
+        background-color: transparent;
+        border : 0px solid $grey;
+        border-bottom-width : 1px;
+        background-color : transparent;
+
+        font-family: $annie_font;
+        font-size: 24px;
+
+        &:focus {
+            border-color: $secondary_background;
+        }
+    }
+}

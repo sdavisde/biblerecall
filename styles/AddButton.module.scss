@@ -3,10 +3,13 @@
 .addBtn {
     color: $font-color;
     background-color: $tertiary_background;
-    min-width: inherit;
-    height: 10%;
-    border: 3px solid $tertiary_background;
+    min-width: fit-content;
+    width: 10%;
+    border: 1px solid $secondary_color;
     border-radius: 5px;
     cursor: pointer;
     font-size: 24px;
+
+    display: flex;
+    justify-content: center;
 }
