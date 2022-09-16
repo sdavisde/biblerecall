@@ -1,5 +1,5 @@
 import styles from '../../styles/VerseGame.module.scss';
-import React, { useRouter } from 'react';
+import React, { useRouter } from 'next/router';
 import TextareaAutosize from 'react-textarea-autosize';
 import { GetVerseIds, GetVerseData } from '../../db_access/pageData';
 
