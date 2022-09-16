@@ -39,10 +39,17 @@
     }
 }
 
-.rightSection {
-    width: 5%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.hoverIcons {
+    // Edit Btn
+    img {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 20px;
+        right: -13px;
+    
+        &:hover {
+            filter: brightness(150%);
+        }
+    }
 }

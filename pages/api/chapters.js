@@ -5,8 +5,6 @@ export default function handler(req, res) {
     return new Promise((resolve, reject) => {
         let query = req.query;
         let { bookId } = query;
-    
-        console.log(`https://bible-go-api.rkeplin.com/v1/books/${bookId}/chapters`)
 
         fetch(`https://bible-go-api.rkeplin.com/v1/books/${bookId}/chapters`)
             .then((res) => res.json())

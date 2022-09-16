@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import AddButton from './AddButton';
 import VerseBox from './VerseBox';
 import Lightbox from './Lightbox';
 import AddVerse from './AddVerse';
-import VerseGame from './VerseGame';
 import styles from '../styles/Hub.module.scss';
 
 export default function Hub({...props}) {
@@ -30,12 +30,17 @@ export default function Hub({...props}) {
     let deleteVerse = (id, e) => {
         console.log(e, id);
         e.stopPropagation();
-        fetch(`/api/delete_verse?id=${id}&group=${currentGroup}`)
+        fetch(`/api/delete_verse?id=${id}`)
             .then((res) => res.json())
             .then((data) => {
                 getVerses();
             })
     };
+
+    let updateVerse = (id, e) => {
+        console.log(e);
+        console.log(`Update verse: ${JSON.stringify(verseList.filter(verse => verse.id === id))}`)
+    }
 
     let getVerses = () => {
         // setLoading(true);
@@ -47,18 +52,12 @@ export default function Hub({...props}) {
             })
     };
 
-    let openGame = (verse) => {
-        console.log(verse);
-        setClickedVerse(verse);
-        toggleDisplay('Game');
-    };
-
     return (
         <>
             <div className={styles.verseList}>
                 <div>
                     {verseList.map((verse, index) =>
-                        <VerseBox key={index} verse={verse} remove={deleteVerse} view={openGame}/>
+                        <VerseBox key={index} verse={verse} remove={deleteVerse} update={updateVerse}/>
                     )}
 
                     {
@@ -66,7 +65,7 @@ export default function Hub({...props}) {
                         &&
                         (<Lightbox toggleDisplay={() => toggleDisplay('Add')}>
                             {lightboxContent == 'Add' && <AddVerse formSubmitted={getVerses}/>}
-                            {lightboxContent == 'Game' && <VerseGame verse={clickedVerse} />}
+                            {lightboxContent == 'Game' && <h1>Game</h1>}
                         </Lightbox>)
                     }
                     <div className={styles.btnContainer}>
