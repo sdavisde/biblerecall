@@ -28,7 +28,7 @@ export async function getStaticPaths() {
     let paths = GetVerseIds().then((paths) => {
         return {
             paths,
-            fallback: false,
+            fallback: true,
         };
     });
 
