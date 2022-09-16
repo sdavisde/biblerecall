@@ -1,7 +1,7 @@
 import styles from '../../styles/VerseGame.module.scss';
 import React, { useState, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { GetVerseIds, GetVerseData } from '../db_access/pageData';
+import { GetVerseIds, GetVerseData } from '../../db_access/pageData';
 
 export default function VerseGame({ verseData }) {
 
