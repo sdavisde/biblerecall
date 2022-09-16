@@ -1,9 +1,11 @@
 import styles from '../../styles/VerseGame.module.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useRouter } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { GetVerseIds, GetVerseData } from '../../db_access/pageData';
 
 export default function VerseGame({ verseData }) {
+
+    const router = useRouter();
 
     let onChange = (e) => {
         // Check that the keystroke is correct for that word
@@ -12,14 +14,18 @@ export default function VerseGame({ verseData }) {
     };
 
     return (
-        <div className={styles.container}>
-            <h1>{verseData.book} {verseData.chapter}:{verseData.verse}</h1>
-            <TextareaAutosize name="text" 
-                    placeholder='Verse Text'
-                    value={verseData.text} 
-                    spellCheck="false"
-                    className={styles.verseText}/>
-        </div>
+            (router.isFallback)
+            ?
+                (<div>Loading...</div>)
+            :
+                (<div className={styles.container}>
+                    <h1>{verseData.book} {verseData.chapter}:{verseData.verse}</h1>
+                    <TextareaAutosize name="text" 
+                            placeholder='Verse Text'
+                            value={verseData.text} 
+                            spellCheck="false"
+                            className={styles.verseText}/>
+                </div>)
 	);
 }
 
