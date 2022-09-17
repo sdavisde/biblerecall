@@ -2,20 +2,31 @@ import styles from '../../styles/VerseGame.module.scss';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import arrow from '../../assets/arrow.png';
-import React, { useRouter } from 'next/router';
-import TextareaAutosize from 'react-textarea-autosize';
 import { GetVerseIds, GetVerseData } from '../../db_access/pageData';
 
 export default function VerseGame({ verseData }) {
-
+    const [cursorPosition, setCursorPosition] = useState(0);
     const router = useRouter();
+
+    useEffect(() => {
+        
+    }, []);
 
     let onChange = (e) => {
         // Check that the keystroke is correct for that word
         // Highlight the word red or black depending on if it's correct
         // Move to the next word
+        console.log(`onchange`);
+        console.log(e);
     };
+
+    let onKeyDown = (e) => {
+        console.log(`on key down`);
+        console.log(e);
+    }
 
     return (
         <>
@@ -47,9 +58,13 @@ export default function VerseGame({ verseData }) {
                                 <div className={styles.card}>
                                     <textarea name="text" 
                                             placeholder='Verse Text'
-                                            value={verseData.text} 
+                                            onKeyDown={(e) => onKeyDown(e)}
+                                            onChange={(e) => onChange(e)}
                                             spellCheck="false"
-                                            className={styles.verseText}/>
+                                            className={styles.verseText}
+                                            defaultValue={verseData.text}
+                                            autoFocus>
+                                    </textarea>
                                 </div>
                                 <div className={styles.steps}>
                                     <div className={styles.step}>
@@ -63,7 +78,7 @@ export default function VerseGame({ verseData }) {
                                     </div>
                                 </div>
                                 <div className={styles.leftContainer}>
-                                    <Link href="/">
+                                    <Link href={"/"}>
                                         <Image 
                                             src={arrow}
                                             width="50px"
