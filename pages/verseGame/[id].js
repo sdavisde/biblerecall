@@ -11,21 +11,47 @@ export default function VerseGame({ verseData }) {
     const [cursorPosition, setCursorPosition] = useState(0);
     const router = useRouter();
 
-    useEffect(() => {
-        
-    }, []);
+    let key = null;
+    const text = verseData.text;
 
     let onChange = (e) => {
         // Check that the keystroke is correct for that word
         // Highlight the word red or black depending on if it's correct
         // Move to the next word
         console.log(`onchange`);
-        console.log(e);
+
+        let textarea = e.target;
+
+        if (textarea) {
+            const input = key;
+            const cursor = e.target.selectionStart;
+
+            if (input && cursor && text) {
+                let end = textarea.selectionEnd;
+                let wordLength = 5;
+                
+                // Get letter at cursor, determine right vs wrong
+                if (text[cursor-1].toLowerCase() == input.toLowerCase()) {
+                    console.log('correct answer!');
+                }
+                else {
+                    console.log('incorrect answer!');
+                }
+
+                // Determine length of word selected
+                let remainingString = text.substring(cursor, text.indexOf(' ', cursor));
+                wordLength = remainingString.length + 1;
+
+                // Remove user changes and move cursor forward
+                textarea.value = text;
+                textarea.selectionEnd = end + wordLength;
+                textarea.selectionStart = end + wordLength;
+            }
+        }
     };
 
     let onKeyDown = (e) => {
-        console.log(`on key down`);
-        console.log(e);
+        key = e.key;
     }
 
     return (
