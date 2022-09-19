@@ -12,7 +12,7 @@ export default function VerseGame({ verseData }) {
     const router = useRouter();
 
     let key = null;
-    const text = verseData.text;
+    const text = verseData ? verseData.text : null;
 
     let onChange = (e) => {
         // Check that the keystroke is correct for that word
