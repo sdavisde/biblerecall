@@ -5,15 +5,12 @@ import AddButton from '../components/AddButton';
 import VerseBox from '../components/VerseBox';
 import Lightbox from '../components/Lightbox';
 import AddVerse from '../components/AddVerse';
+import { GetAllVerses, GetAllBooks } from '../db_access/pageData';
 
-export default function Home() {
-    const [verseList, setVerseList] = useState([]);
+export default function Home({ verses, books }) {
+    const [verseList, setVerseList] = useState(verses);
     const [lightboxDisplay, setLightboxDisplay] = useState(false);
     const [lightboxContent, setLightboxContent] = useState('');
-
-    useEffect(() => {
-        getVerses();
-    }, []);
 
     let toggleDisplay = (target) => {
         setLightboxContent(target);
@@ -71,7 +68,7 @@ export default function Home() {
                                 lightboxDisplay 
                                 &&
                                 (<Lightbox toggleDisplay={() => toggleDisplay('Add')}>
-                                    {lightboxContent == 'Add' && <AddVerse formSubmitted={() => {getVerses(); toggleDisplay('None')}}/>}
+                                    {lightboxContent == 'Add' && <AddVerse books={books} formSubmitted={() => {getVerses(); toggleDisplay('None')}}/>}
                                     {lightboxContent == 'Game' && <h1>Game</h1>}
                                 </Lightbox>)
                             }
@@ -84,4 +81,26 @@ export default function Home() {
             </main>
         </div>
     )
+}
+
+export async function getStaticProps() {
+    let verses = GetAllVerses().then((verses) => {
+        let books = GetAllBooks().then((books) => {
+            return {
+                props: {
+                    verses,
+                    books,
+                },
+                
+                // Next.js will attempt to re-generate the page:
+                // - When a request comes in
+                // - At most once every 1 second
+                revalidate: 1, // In seconds
+            }
+        });
+
+        return books;
+    });
+    
+    return verses;
 }
