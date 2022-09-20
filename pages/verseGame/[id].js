@@ -8,7 +8,7 @@ import arrow from '../../assets/arrow.png';
 import { GetVerseIds, GetVerseData } from '../../db_access/pageData';
 
 export default function VerseGame({ verseData }) {
-    const [cursorPosition, setCursorPosition] = useState(0);
+    const [verseComplete, setVerseComplete] = useState(false);
     const router = useRouter();
 
     let key = null;
@@ -46,6 +46,11 @@ export default function VerseGame({ verseData }) {
                 textarea.value = text;
                 textarea.selectionEnd = end + wordLength;
                 textarea.selectionStart = end + wordLength;
+                
+                if (textarea.selectionEnd == textarea.textLength) {
+                    // End of verse
+                    setVerseComplete(true);
+                }
             }
         }
     };
@@ -81,6 +86,9 @@ export default function VerseGame({ verseData }) {
                                 <h1>{verseData.book} {verseData.chapter}:{verseData.verse}</h1>
                             </div>
                             <div className={styles.cardContainer}>
+                                <div className={styles.info}>
+                                    <em>Type the first letter of each word to memorize this verse!</em>
+                                </div>
                                 <div className={styles.card}>
                                     <textarea name="text" 
                                             placeholder='Verse Text'

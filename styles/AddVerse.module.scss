@@ -8,7 +8,7 @@
     align-items: flex-start;
     font-size: 16px;
     overflow-x: wrap;
-    font-family: $annie_font;
+    font-family: $baskerville;
 }
 
 .Heading {
@@ -34,7 +34,7 @@
         border : 0px solid $grey;
         border-bottom-width : 1px;
         background-color : transparent;
-        font-family: $annie_font;
+        font-family: $baskerville;
         font-size: 24px;
     }
 
@@ -45,7 +45,7 @@
         border : 0px solid $grey;
         border-bottom-width : 1px;
         background-color : transparent;
-        font-family: $annie_font;
+        font-family: $baskerville;
         font-size: 24px;
 
         &[disabled] {
@@ -73,7 +73,11 @@
     border: 3px solid $tertiary_background;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
+    
+    &:hover {
+        background-color: secondary_background_faded;
+    }
 }
 
 .verseText {
@@ -85,6 +89,6 @@
     border-bottom-width : 1px;
     background-color : transparent;
 
-    font-family: $annie_font;
+    font-family: $baskerville;
     font-size: 24px;
 }

@@ -15,12 +15,12 @@ export default function VerseBox ({ verse, remove, update }) {
             <Link href={`/verseGame/${verse.id}`}>
                 <a>
                     <div className={styles.leftSection}>
-                        <h1>
+                        <h2>
                             {verse.book} {verse.chapter} : {verse.verse} <br/>
-                        </h1>
-                        <h3>
+                        </h2>
+                        <p>
                             {verse.text}
-                        </h3>
+                        </p>
                     </div>
                 </a>
             </Link>

@@ -8,8 +8,12 @@
     border: 1px solid $secondary_color;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: 20px;
 
     display: flex;
     justify-content: center;
+
+    &:hover {
+        background-color: $secondary_background_faded;
+    }
 }
