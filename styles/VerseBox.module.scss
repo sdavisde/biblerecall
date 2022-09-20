@@ -19,11 +19,21 @@
 
     &:hover {
         background-color: $secondary_background_faded;
+        animation: pulse 1.5s infinite;
+        animation-timing-function: linear; 
     }
 
     @media screen and (min-width: $bp-tablet) {
         width: 50vw;
     }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.01);}
+    50% { transform: scale(1); }
+    75% { transform: scale(0.99);}
+    100% { transform: scale(1); }
 }
 
 .leftSection {

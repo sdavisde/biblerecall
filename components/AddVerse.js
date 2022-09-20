@@ -77,6 +77,7 @@ export default function AddVerse({ formSubmitted, books }) {
                 else {
                     setChapterSelectDisabled(true);
                     setVerseSelectDisabled(true);
+                    setVerseText();
                 }
                 break;
             case 'chapter':
@@ -86,6 +87,7 @@ export default function AddVerse({ formSubmitted, books }) {
                     setVerseSelectDisabled(false);
                 } else {
                     setVerseSelectDisabled(true);
+                    setVerseText();
                 }
                 break;
             case 'verse':
@@ -104,7 +106,7 @@ export default function AddVerse({ formSubmitted, books }) {
         <div className={styles.container}>
             <h1 className={styles.Heading}>New Verse</h1>
             <div className={styles.row}>
-                <input name="book" onChange={onChange} placeholder="Enter Book Name" list="books" className={styles.book}/>
+                <input name="book" onChange={onChange} placeholder="Enter Book" list="books" className={styles.book}/>
                 <datalist id="books">
                     {books.map((book, key) =>
                         <option key={key} id={book.id}>{book.name}</option>

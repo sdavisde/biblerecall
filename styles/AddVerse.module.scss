@@ -34,8 +34,7 @@
         border : 0px solid $grey;
         border-bottom-width : 1px;
         background-color : transparent;
-        font-family: $baskerville;
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .numList {
@@ -45,8 +44,7 @@
         border : 0px solid $grey;
         border-bottom-width : 1px;
         background-color : transparent;
-        font-family: $baskerville;
-        font-size: 24px;
+        font-size: 20px;
 
         &[disabled] {
             color: $dark-font-color;
@@ -63,7 +61,6 @@
 
 .colon {
     color: $darker-font-color;
-    font-size: 24px;
 }
 
 .addBtn {
@@ -73,7 +70,6 @@
     border: 3px solid $tertiary_background;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 20px;
     
     &:hover {
         background-color: secondary_background_faded;
@@ -88,7 +84,4 @@
     border : 0px solid $grey;
     border-bottom-width : 1px;
     background-color : transparent;
-
-    font-family: $baskerville;
-    font-size: 24px;
 }
