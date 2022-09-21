@@ -6,10 +6,31 @@ export default function Lightbox({ ...props }) {
 
 	return (
         <div className={styles.lightboxOverlay}>
-            <div className={styles.lightbox}>
-                <CloseButton onClick={props.toggleDisplay}/>
-                {props.children}
-            </div>
+            {
+                props.simpleLayout
+                ?
+                (
+                    <div className={styles.simpleLightbox}>
+                        {
+                            props.showClose
+                            &&
+                            <CloseButton onClick={props.toggleDisplay}/>
+                        }
+                        {props.children}
+                    </div>
+                )
+                :
+                (
+                    <div className={styles.lightbox}>
+                        {
+                            props.showClose
+                            &&
+                            <CloseButton onClick={props.toggleDisplay}/>
+                        }
+                        {props.children}
+                    </div>
+                )
+            }
         </div>
 	);
 }

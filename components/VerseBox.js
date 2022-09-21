@@ -13,7 +13,7 @@ export default function VerseBox ({ verse, remove, update }) {
             onMouseLeave={() => setInHoverState(false)}
         >
             <Link href={`/verseGame/${verse.id}`}>
-                <a>
+                <a className={styles.anchor}>
                     <div className={styles.leftSection}>
                         <h2>
                             {verse.book} {verse.chapter} : {verse.verse} <br/>

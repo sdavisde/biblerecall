@@ -2,16 +2,21 @@ import styles from '../../styles/VerseGame.module.scss';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import Lightbox from '../../components/Lightbox';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import arrow from '../../assets/arrow.png';
+import loadingGif from '../../assets/loading.gif';
 import { GetVerseIds, GetVerseData } from '../../db_access/pageData';
 import $ from 'jquery';
 
 export default function VerseGame({ verseData }) {
     const [verseComplete, setVerseComplete] = useState(false);
+    const [finished, setFinished] = useState(false);
+    const [failed, setFailed] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [index, setIndex] = useState(0);
-    const [displayedText, setDisplayedText] = useState(verseData ? verseData.text.split(' ') : []);
+    const displayedText = verseData ? verseData.text.split(' ') : [];
     // Same in every game mode, used for coloring logic.
     const textRefs = verseData ? verseData.text.split(' ').map((word) => {
             return {
@@ -20,15 +25,52 @@ export default function VerseGame({ verseData }) {
                 processed: false
             };
         }) : null;
+    const [difficulty, setDifficulty] = useState(1);
+    const [parity, setParity] = useState('odd');
     const [key, setKey] = useState(null);
+    const [wordsCorrect, setWordsCorrect] = useState(0);
     const router = useRouter();
+    const input = useRef(null);
+    const loading_time = 1800;
 
-    let setGameMode = (diff) => {
+    let setGameMode = (diff, loadGif = true) => {
         // trigger a 1 second load gif to switch between difficulties
+        if (loadGif)
+            triggerLoad();
 
-        // if diff 1, remove all classes from displayTexts
-        // if diff 2, add "background_font" class to every other displayText
+        // reset position in displayed text
+        setIndex(0);
+        input.current.focus();
+        $('.verse_word').removeClass().addClass('verse_word').delay(800);
+
+        // if diff 1, already reset.        
+        // if diff 2, add "background_font" class to every other displayText 
+        if (diff == 2) {
+            // compare with previous difficulty
+            if (difficulty == 2) {
+                setParity((parity == 'odd') ? 'even' : 'odd');
+            }
+
+            // iterate through each word, and take 1200 / n seconds for each one.
+            const delayTime = loading_time / displayedText.length;
+            $(`.verse_words div :nth-child(${parity})`).each((i, elem) => {
+                setTimeout(() => {
+                    $( elem ).addClass('hidden');
+                }, i*delayTime);
+            });
+        } 
+
         // if diff 3, add "background_font" class to every displayText
+        else if (diff == 3) {
+            const delayTime = loading_time / displayedText.length;
+            $(`.verse_words div div`).each((i, elem) => {
+                setTimeout(() => {
+                    $( elem ).addClass('hidden');
+                }, i*delayTime);
+            });
+        }
+
+        setDifficulty(diff);
     }
 
     let onChange = (e) => {
@@ -38,19 +80,70 @@ export default function VerseGame({ verseData }) {
         console.log(`onchange`);
         e.target.value = '';
 
-        const target = textRefs[index];
-        const valid = target.word[0] == key.toLowerCase();
-        $(`#verse_word_${index}`)[0].classList.add(valid ? 'right' : 'wrong');
+        if (index < textRefs.length) {
+            $(`.verse_words div`).removeClass('target');
 
-        if (index == textRefs.length) {
-            setVerseComplete(true);
+            if ($(`.verse_word:nth-child(${index + 1})`))
+                $(`.verse_word:nth-child(${index + 1})`).removeClass('hidden');
+
+            if ($(`.verse_word:nth-child(${index + 2})`))
+                $(`.verse_word:nth-child(${index + 2})`).addClass('target');
+
+            const target = textRefs[index];
+            const valid = target.word[0] == key.toLowerCase();
+
+            if (valid)
+                setWordsCorrect(prev => (prev + 1));
+
+            $(`#verse_word_${index}`)[0].classList.add(valid ? 'right' : 'wrong');
+
+            // Verse is complete! Evaluate player performance
+            if (index == textRefs.length - 1) {
+                const correctPercent = wordsCorrect / textRefs.length;
+                valid = (correctPercent >= 0.9);
+
+                setVerseComplete(true);
+
+                if (valid) {
+                    switch (difficulty) {
+                        case 1:
+                            setGameMode(2);
+                            break;
+                        case 2:
+                            setGameMode(3);
+                            break;
+                        case 3:
+                            setFinished(true);
+                            setTimeout(() => {
+                                router.push('/');
+                            }, 2000);
+                            break;
+                    }
+                } else {
+                    setFailed(true);
+                    setTimeout(() => {
+                        setFailed(false);
+                        setVerseComplete(false);
+                        setGameMode(difficulty, false);
+                    }, 2000);
+                }
+
+            }
+
+            setIndex(prev => (prev + 1));
         }
-
-        setIndex(prev => (prev + 1));
     };
 
     let onKeyDown = (e) => {
         setKey(e.key);
+    }
+
+    let triggerLoad = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            setVerseComplete(false);
+        }, loading_time);
     }
 
     return (
@@ -80,18 +173,40 @@ export default function VerseGame({ verseData }) {
                                 <h1>{verseData.book} {verseData.chapter}:{verseData.verse}</h1>
                             </div>
                             <div className={styles.cardContainer}>
-                                <div className={styles.info}>
-                                    <em>Type the first letter of each word to memorize this verse!</em>
+                                <div className={styles.banner}>
+                                    {
+                                        (verseComplete)
+                                        ?
+                                        (<div className={styles.win}>
+                                            <em>Good job memorizing this verse. Moving to next step...</em>
+                                        </div>)
+                                        :
+                                        (<div className={styles.info}>
+                                            <em>Type the first letter of each word to memorize this verse!</em>
+                                        </div>)
+                                    }
                                 </div>
-                                <div className={styles.verseDisplay}>
-                                    {displayedText.map((text, index) => 
-                                        <div id={'verse_word_'+index} key={index}>{text}</div>
-                                    )}
+                                <div className='verse_words'>
+                                    <div className={styles.verseDisplay}>
+                                        {displayedText.map((text, index) => 
+                                            <div id={'verse_word_'+index} 
+                                                key={index} 
+                                                className={`verse_word ${index == 0 ? 'target' : ''}`}>{text}</div>
+                                        )}
+                                    </div>
                                 </div>
+                                {
+                                    (loading)
+                                    &&
+                                    <div className={styles.gifContainer}>
+                                        <Image src={loadingGif} width='218px' height='149px'/>
+                                    </div>
+                                }
                                 <input placeholder='Answer Here!' 
                                     onKeyDown={(e) => onKeyDown(e)}
                                     onChange={(e) => onChange(e)}
                                     className={styles.input}
+                                    ref={input}
                                     autoFocus />
                                 <div className={styles.steps}>
                                     <div className={styles.step} onClick={() => setGameMode(1)}>
@@ -104,7 +219,6 @@ export default function VerseGame({ verseData }) {
                                         Step 3
                                     </div>
                                 </div>
-                                    
                                 <div className={styles.leftContainer}>
                                     <Link href={"/"}>
                                         <Image 
@@ -119,6 +233,28 @@ export default function VerseGame({ verseData }) {
                         )
                     }
                 </div>
+                {
+                    finished 
+                    &&
+                    (<Lightbox showClose={false} simpleLayout={true}>
+                        <h1>Great Job!</h1>
+                        <p>
+                            You&aposve memorized this verse. Try memorizing another one!
+                        </p>
+                        <Image src={loadingGif} width='218px' height='149px'/>
+                    </Lightbox>)
+                }
+                {
+                    failed 
+                    &&
+                    (<Lightbox showClose={false} simpleLayout={true}>
+                        <h1>Sorry!</h1>
+                        <p>
+                            You got less than 90% of this verse correct. Try mastering this step before continuing!
+                        </p>
+                        <Image src={loadingGif} width='218px' height='149px'/>
+                    </Lightbox>)
+                }
             </main>
         </>
 	);

@@ -83,19 +83,14 @@ export default function Home({ verses, books }) {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     let verses = GetAllVerses().then((verses) => {
         let books = GetAllBooks().then((books) => {
             return {
                 props: {
-                    verses,
-                    books,
-                },
-                
-                // Next.js will attempt to re-generate the page:
-                // - When a request comes in
-                // - At most once every 1 second
-                revalidate: 1, // In seconds
+                    verses: verses,
+                    books: books,
+                }
             }
         });
 
