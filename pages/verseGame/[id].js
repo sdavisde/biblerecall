@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Lightbox from '../../components/Lightbox';
+import ProgressBar from '../../components/ProgressBar';
 import { useRouter } from 'next/router';
 import { useState, useRef } from 'react';
 import arrow from '../../assets/arrow.png';
@@ -19,6 +20,7 @@ export default function VerseGame({ verseData }) {
     const [failed, setFailed] = useState(false);
     const [loading, setLoading] = useState(false);
     const [index, setIndex] = useState(0);
+    const [completed, setCompleted] = useState(0);
     const displayedText = verseData ? verseData.text.split(' ') : [];
     // Same in every game mode, used for coloring logic.
     const textRefs = verseData ? verseData.text.split(' ').map((word) => {
@@ -77,10 +79,6 @@ export default function VerseGame({ verseData }) {
     }
 
     let onChange = (e) => {
-        // Check that the keystroke is correct for that word
-        // Highlight the word red or black depending on if it's correct
-        // Move to the next word
-        console.log(`onchange`);
         e.target.value = '';
 
         if (index < textRefs.length) {
@@ -95,11 +93,6 @@ export default function VerseGame({ verseData }) {
             const target = textRefs[index];
             const valid = target.word[0] == key.toLowerCase();
 
-            console.log(`index: ${index}`);
-            console.log(`textRefs[i]: ${textRefs[index]}`);
-            console.log(`target.word: ${target.word}`);
-            console.log(`key: ${key}`);
-
             if (valid)
                 setWordsCorrect(prev => (prev + 1));
 
@@ -107,10 +100,12 @@ export default function VerseGame({ verseData }) {
 
             setIndex(prev => (prev + 1));
 
+            const correctPercent = Math.round((wordsCorrect / textRefs.length) * 100);
+            setCompleted(correctPercent);
+            valid = (correctPercent >= 90);
+
             // Verse is complete! Evaluate player performance
             if (index >= textRefs.length - 1) {
-                const correctPercent = wordsCorrect / textRefs.length;
-                valid = (correctPercent >= 0.9);
 
                 if (valid) {
                     switch (difficulty) {
@@ -156,11 +151,13 @@ export default function VerseGame({ verseData }) {
     let moveForward = () => {
         setIsTransition(false);
         setVerseComplete(true);
+        setCompleted(0);
         setGameMode(difficulty + 1);
     }
 
     let retryStep = () => {
         setIsTransition(false);
+        setCompleted(0);
         setGameMode(difficulty);
     }
 
@@ -239,6 +236,9 @@ export default function VerseGame({ verseData }) {
                                         Step 3
                                     </div>
                                 </div>
+                                <div className={styles.progressBarContainer}>
+                                    <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
+                                </div>
                                 <div className={styles.leftContainer}>
                                     <Link href={"/"}>
                                         <Image 
@@ -291,6 +291,9 @@ export default function VerseGame({ verseData }) {
                             You got less than 90% of this verse correct. Try mastering this step before continuing!
                         </p>
                         <Image src={loadingGif} width='218px' height='149px'/>
+                        <div className={styles.progressBarContainer}>
+                            <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
+                        </div>
                     </Lightbox>)
                 }
             </main>
