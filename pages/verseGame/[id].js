@@ -7,11 +7,14 @@ import { useRouter } from 'next/router';
 import { useState, useRef } from 'react';
 import arrow from '../../assets/arrow.png';
 import loadingGif from '../../assets/loading.gif';
+import retry from '../../assets/retry.png';
+import forward from '../../assets/forward.png';
 import { GetVerseIds, GetVerseData } from '../../db_access/pageData';
 import $ from 'jquery';
 
 export default function VerseGame({ verseData }) {
     const [verseComplete, setVerseComplete] = useState(false);
+    const [isTransition, setIsTransition] = useState(false);
     const [finished, setFinished] = useState(false);
     const [failed, setFailed] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -92,25 +95,30 @@ export default function VerseGame({ verseData }) {
             const target = textRefs[index];
             const valid = target.word[0] == key.toLowerCase();
 
+            console.log(`index: ${index}`);
+            console.log(`textRefs[i]: ${textRefs[index]}`);
+            console.log(`target.word: ${target.word}`);
+            console.log(`key: ${key}`);
+
             if (valid)
                 setWordsCorrect(prev => (prev + 1));
 
             $(`#verse_word_${index}`)[0].classList.add(valid ? 'right' : 'wrong');
 
+            setIndex(prev => (prev + 1));
+
             // Verse is complete! Evaluate player performance
-            if (index == textRefs.length - 1) {
+            if (index >= textRefs.length - 1) {
                 const correctPercent = wordsCorrect / textRefs.length;
                 valid = (correctPercent >= 0.9);
-
-                setVerseComplete(true);
 
                 if (valid) {
                     switch (difficulty) {
                         case 1:
-                            setGameMode(2);
+                            setIsTransition(true);
                             break;
                         case 2:
-                            setGameMode(3);
+                            setIsTransition(true);
                             break;
                         case 3:
                             setFinished(true);
@@ -128,9 +136,8 @@ export default function VerseGame({ verseData }) {
                     }, 2000);
                 }
 
+                setWordsCorrect(0);
             }
-
-            setIndex(prev => (prev + 1));
         }
     };
 
@@ -144,6 +151,17 @@ export default function VerseGame({ verseData }) {
             setLoading(false);
             setVerseComplete(false);
         }, loading_time);
+    }
+
+    let moveForward = () => {
+        setIsTransition(false);
+        setVerseComplete(true);
+        setGameMode(difficulty + 1);
+    }
+
+    let retryStep = () => {
+        setIsTransition(false);
+        setGameMode(difficulty);
     }
 
     return (
@@ -195,19 +213,21 @@ export default function VerseGame({ verseData }) {
                                         )}
                                     </div>
                                 </div>
-                                {
-                                    (loading)
-                                    &&
-                                    <div className={styles.gifContainer}>
-                                        <Image src={loadingGif} width='218px' height='149px'/>
-                                    </div>
-                                }
-                                <input placeholder='Answer Here!' 
-                                    onKeyDown={(e) => onKeyDown(e)}
-                                    onChange={(e) => onChange(e)}
-                                    className={styles.input}
-                                    ref={input}
-                                    autoFocus />
+                                <div className={styles.answerBox}>
+                                    {
+                                        (loading)
+                                        &&
+                                        <div className={styles.gifContainer}>
+                                            <Image src={loadingGif} width='218px' height='149px'/>
+                                        </div>
+                                    }
+                                    <input placeholder='Answer Here!' 
+                                        onKeyDown={(e) => onKeyDown(e)}
+                                        onChange={(e) => onChange(e)}
+                                        className={styles.input}
+                                        ref={input}
+                                        autoFocus />
+                                </div>
                                 <div className={styles.steps}>
                                     <div className={styles.step} onClick={() => setGameMode(1)}>
                                         Step 1
@@ -239,9 +259,27 @@ export default function VerseGame({ verseData }) {
                     (<Lightbox showClose={false} simpleLayout={true}>
                         <h1>Great Job!</h1>
                         <p>
-                            You&aposve memorized this verse. Try memorizing another one!
+                            You&apos;ve memorized this verse. Try memorizing another one!
                         </p>
                         <Image src={loadingGif} width='218px' height='149px'/>
+                    </Lightbox>)
+                }
+                {
+                    isTransition
+                    &&
+                    (<Lightbox showClose={false} simpleLayout={true}>
+                        <h1>Nice!</h1>
+                        <p>
+                            You've completed this step. Would you like to re-do this step, or move forward?
+                        </p>
+                        <div className={styles.buttons}>
+                            <div onClick={() => retryStep()}>
+                                <Image src={retry} width='218px' height='149px' className={styles.retry}/>
+                            </div>
+                            <div onClick={() => moveForward()}>
+                                <Image src={forward} width='218px' height='149px' className={styles.forward}/>
+                            </div>
+                        </div>
                     </Lightbox>)
                 }
                 {

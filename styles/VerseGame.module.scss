@@ -182,7 +182,28 @@
     }
 }
 
-.gifContainer {
-    position: absolute;
-    left: 130px;
+
+.answerBox {
+    position: relative;
+
+    .gifContainer {
+        position: absolute;
+        left: 50px;
+        top: -25px;
+    }
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+
+    .retry {
+        width: 150px;
+        cursor: pointer;
+    }
+    
+    .forward {
+        width: 150px;
+        cursor: pointer;
+    }
 }
