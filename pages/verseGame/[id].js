@@ -11,15 +11,15 @@ import $ from 'jquery';
 export default function VerseGame({ verseData }) {
     const [verseComplete, setVerseComplete] = useState(false);
     const [index, setIndex] = useState(0);
-    const [displayedText, setDisplayedText] = useState(verseData.text.split(' '));
+    const [displayedText, setDisplayedText] = useState(verseData ? verseData.text.split(' ') : []);
     // Same in every game mode, used for coloring logic.
-    const textRefs = verseData.text.split(' ').map((word) => {
+    const textRefs = verseData ? verseData.text.split(' ').map((word) => {
             return {
                 word: word.toLowerCase(),
                 length: word.length,
                 processed: false
             };
-        })
+        }) : null;
     const [key, setKey] = useState(null);
     const router = useRouter();
 
