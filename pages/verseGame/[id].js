@@ -270,7 +270,7 @@ export default function VerseGame({ verseData }) {
                     (<Lightbox showClose={false} simpleLayout={true}>
                         <h1>Nice!</h1>
                         <p>
-                            You've completed this step. Would you like to re-do this step, or move forward?
+                            You&apos;ve completed this step. Would you like to re-do this step, or move forward?
                         </p>
                         <div className={styles.buttons}>
                             <div onClick={() => retryStep()}>
