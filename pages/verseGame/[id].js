@@ -6,57 +6,51 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import arrow from '../../assets/arrow.png';
 import { GetVerseIds, GetVerseData } from '../../db_access/pageData';
+import $ from 'jquery';
 
 export default function VerseGame({ verseData }) {
     const [verseComplete, setVerseComplete] = useState(false);
+    const [index, setIndex] = useState(0);
+    const [displayedText, setDisplayedText] = useState(verseData.text.split(' '));
+    // Same in every game mode, used for coloring logic.
+    const textRefs = verseData.text.split(' ').map((word) => {
+            return {
+                word: word.toLowerCase(),
+                length: word.length,
+                processed: false
+            };
+        })
+    const [key, setKey] = useState(null);
     const router = useRouter();
 
-    let key = null;
-    const text = verseData ? verseData.text : null;
+    let setGameMode = (diff) => {
+        // trigger a 1 second load gif to switch between difficulties
+
+        // if diff 1, remove all classes from displayTexts
+        // if diff 2, add "background_font" class to every other displayText
+        // if diff 3, add "background_font" class to every displayText
+    }
 
     let onChange = (e) => {
         // Check that the keystroke is correct for that word
         // Highlight the word red or black depending on if it's correct
         // Move to the next word
         console.log(`onchange`);
+        e.target.value = '';
 
-        let textarea = e.target;
+        const target = textRefs[index];
+        const valid = target.word[0] == key.toLowerCase();
+        $(`#verse_word_${index}`)[0].classList.add(valid ? 'right' : 'wrong');
 
-        if (textarea) {
-            const input = key;
-            const cursor = e.target.selectionStart;
-
-            if (input && cursor && text) {
-                let end = textarea.selectionEnd;
-                let wordLength = 5;
-                
-                // Get letter at cursor, determine right vs wrong
-                if (text[cursor-1].toLowerCase() == input.toLowerCase()) {
-                    console.log('correct answer!');
-                }
-                else {
-                    console.log('incorrect answer!');
-                }
-
-                // Determine length of word selected
-                let remainingString = text.substring(cursor, text.indexOf(' ', cursor));
-                wordLength = remainingString.length + 1;
-
-                // Remove user changes and move cursor forward
-                textarea.value = text;
-                textarea.selectionEnd = end + wordLength;
-                textarea.selectionStart = end + wordLength;
-                
-                if (textarea.selectionEnd == textarea.textLength) {
-                    // End of verse
-                    setVerseComplete(true);
-                }
-            }
+        if (index == textRefs.length) {
+            setVerseComplete(true);
         }
+
+        setIndex(prev => (prev + 1));
     };
 
     let onKeyDown = (e) => {
-        key = e.key;
+        setKey(e.key);
     }
 
     return (
@@ -89,28 +83,28 @@ export default function VerseGame({ verseData }) {
                                 <div className={styles.info}>
                                     <em>Type the first letter of each word to memorize this verse!</em>
                                 </div>
-                                <div className={styles.card}>
-                                    <textarea name="text" 
-                                            placeholder='Verse Text'
-                                            onKeyDown={(e) => onKeyDown(e)}
-                                            onChange={(e) => onChange(e)}
-                                            spellCheck="false"
-                                            className={styles.verseText}
-                                            defaultValue={verseData.text}
-                                            autoFocus>
-                                    </textarea>
+                                <div className={styles.verseDisplay}>
+                                    {displayedText.map((text, index) => 
+                                        <div id={'verse_word_'+index} key={index}>{text}</div>
+                                    )}
                                 </div>
+                                <input placeholder='Answer Here!' 
+                                    onKeyDown={(e) => onKeyDown(e)}
+                                    onChange={(e) => onChange(e)}
+                                    className={styles.input}
+                                    autoFocus />
                                 <div className={styles.steps}>
-                                    <div className={styles.step}>
+                                    <div className={styles.step} onClick={() => setGameMode(1)}>
                                         Step 1
                                     </div>
-                                    <div className={styles.step}>
+                                    <div className={styles.step} onClick={() => setGameMode(2)}>
                                         Step 2
                                     </div>
-                                    <div className={styles.step}>
+                                    <div className={styles.step} onClick={() => setGameMode(3)}>
                                         Step 3
                                     </div>
                                 </div>
+                                    
                                 <div className={styles.leftContainer}>
                                     <Link href={"/"}>
                                         <Image 
