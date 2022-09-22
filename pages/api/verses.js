@@ -6,7 +6,7 @@ export default function handler(req, res) {
         const query = req.query;
         const { bookId, chapterId } = query;
         console.log('in verse retrieval');
-        fetch(`https://bible-go-api.rkeplin.com/v1/books/${bookId}/chapters/${chapterId}`)
+        fetch(`https://bible-go-api.rkeplin.com/v1/books/${bookId}/chapters/${chapterId}?translation=ESV`)
         .then((res) => res.json())
         .then((data) => {
             if (data)

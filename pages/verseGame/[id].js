@@ -317,8 +317,6 @@ export async function getStaticProps({ params }) {
     // Fetch necessary data for the verse game using params.id
     let propsList = GetVerseData(params.id).then((verseData) => {
 
-        console.log(`verse data: ${verseData}`);
-
         return {
             props: {
                 verseData

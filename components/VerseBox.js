@@ -29,7 +29,7 @@ export default function VerseBox ({ verse, remove, update }) {
                 inHoverState
                 &&
                 <div className={styles.hoverIcons}>
-                    <EditButton onClick={(e) => update(verse.id, e)}/>                    
+                    {/* <EditButton onClick={(e) => update(verse.id, e)}/>                     */}
                     <DeleteButton onClick={(e) => remove(verse.id, e)}/>
                 </div>
             }

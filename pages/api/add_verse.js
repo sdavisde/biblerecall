@@ -26,7 +26,6 @@ export default function handler(req, res) {
 
     const collectionRef = collection(database, `sean_davis/${group}/verses`);
     const verse = CreateVerse(newVerse.book, newVerse.chapter, newVerse.verse, newVerse.text);
-    console.log(`adding verse: ${JSON.stringify(verse)} to collection `);
 
     addDoc(collectionRef, verse)
         .then(() => {

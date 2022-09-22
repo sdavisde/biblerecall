@@ -22,3 +22,9 @@ export function AddNewVerse(verse) {
     const { book, chapterId, verseId, text, group } = verse;
     return fetch(`/api/add_verse?book=${book}&chapter=${chapterId}&verseNumber=${verseId}&text=${text}&group=${group}`).then((res) => res.json());
 }
+
+export function UpdateVerse(verse) {
+    // TODO 
+    const { book, chapterId, verseId, text, group } = verse;
+    return fetch(`/api/update_verse?`);
+}

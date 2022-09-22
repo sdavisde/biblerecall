@@ -5,12 +5,14 @@ import AddButton from '../components/AddButton';
 import VerseBox from '../components/VerseBox';
 import Lightbox from '../components/Lightbox';
 import AddVerse from '../components/AddVerse';
+import EditVerse from '../components/EditVerse';
 import { GetAllVerses, GetAllBooks } from '../db_access/pageData';
 
 export default function Home({ verses, books }) {
     const [verseList, setVerseList] = useState(verses);
     const [lightboxDisplay, setLightboxDisplay] = useState(false);
     const [lightboxContent, setLightboxContent] = useState('');
+    const [verse, setVerse] = useState(null);
 
     let toggleDisplay = (target) => {
         setLightboxContent(target);
@@ -30,6 +32,8 @@ export default function Home({ verses, books }) {
     let updateVerse = (id, e) => {
         console.log(e);
         console.log(`Update verse: ${JSON.stringify(verseList.filter(verse => verse.id === id))}`)
+        setVerse(verseList.filter(verse => verse.id === id));
+        toggleDisplay('Edit');
     }
 
     let getVerses = () => {
@@ -67,9 +71,16 @@ export default function Home({ verses, books }) {
                             {
                                 lightboxDisplay 
                                 &&
-                                (<Lightbox toggleDisplay={() => toggleDisplay('Add')}>
+                                (<Lightbox toggleDisplay={() => toggleDisplay('None')}>
                                     {lightboxContent == 'Add' && <AddVerse books={books} formSubmitted={() => {getVerses(); toggleDisplay('None')}}/>}
-                                    {lightboxContent == 'Game' && <h1>Game</h1>}
+                                    {lightboxContent == 'Edit' 
+                                        && 
+                                        <EditVerse 
+                                            books={books} 
+                                            verse={verse} 
+                                            id={verse.id}
+                                            formSubmitted={() => {getVerses(); toggleDisplay('None')}}/>
+                                    }
                                 </Lightbox>)
                             }
                             <div className={styles.btnContainer}>
