@@ -36,7 +36,7 @@ export default function VerseGame({ verseData }) {
     const [wordsCorrect, setWordsCorrect] = useState(0);
     const router = useRouter();
     const input = useRef(null);
-    const loading_time = 1800;
+    const loading_time = 4000;
 
     let setGameMode = (diff, loadGif = true) => {
         // trigger a 1 second load gif to switch between difficulties
@@ -119,7 +119,7 @@ export default function VerseGame({ verseData }) {
                             setFinished(true);
                             setTimeout(() => {
                                 router.push('/');
-                            }, 2000);
+                            }, 4000);
                             break;
                     }
                 } else {
@@ -128,7 +128,7 @@ export default function VerseGame({ verseData }) {
                         setFailed(false);
                         setVerseComplete(false);
                         setGameMode(difficulty, false);
-                    }, 2000);
+                    }, 4000);
                 }
 
                 setWordsCorrect(0);
@@ -268,16 +268,16 @@ export default function VerseGame({ verseData }) {
                     isTransition
                     &&
                     (<Lightbox showClose={false} simpleLayout={true}>
-                        <h1>Nice!</h1>
+                        <h1>Well Done!</h1>
                         <p>
                             You&apos;ve completed this step. Would you like to re-do this step, or move forward?
                         </p>
                         <div className={styles.buttons}>
-                            <div onClick={() => retryStep()}>
-                                <Image src={retry} width='218px' height='149px' className={styles.retry}/>
+                            <div onClick={() => retryStep()} className={styles.retry}>
+                                <Image src={retry} width='218px' height='149px'/>
                             </div>
-                            <div onClick={() => moveForward()}>
-                                <Image src={forward} width='218px' height='149px' className={styles.forward}/>
+                            <div onClick={() => moveForward()} className={styles.forward}>
+                                <Image src={forward} width='218px' height='149px'/>
                             </div>
                         </div>
                     </Lightbox>)
