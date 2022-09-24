@@ -1,0 +1,23 @@
+.loginContainer {
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+.profilePic {
+    border-radius: 25px;
+    transform: scale(0.8);
+}
+
+.logOutTooltip {
+
+    .logOut {
+        transform: scale(0.8);
+        margin-bottom: 4px;
+    }
+}
+
+.signIn {
+    transform: scale(0.8);
+    margin: 5px 0px 5px 5px;
+}

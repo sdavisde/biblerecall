@@ -15,7 +15,7 @@ function CreateVerse(book, chapter, verse, text) {
 
 export default function handler(req, res) {
     const query = req.query;
-    const { book, chapter, verseNumber, text, group } = query;
+    const { book, chapter, verseNumber, text, group, userId } = query;
 
     let newVerse = {
         book: book,
@@ -24,7 +24,7 @@ export default function handler(req, res) {
         text: text
     };
 
-    const collectionRef = collection(database, `sean_davis/${group}/verses`);
+    const collectionRef = collection(database, `Users/${userId}/verses`);
     const verse = CreateVerse(newVerse.book, newVerse.chapter, newVerse.verse, newVerse.text);
 
     addDoc(collectionRef, verse)

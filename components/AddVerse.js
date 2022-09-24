@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { GetBooks, GetChapters, GetVerses, AddNewVerse } from '../middleware/verse';
 
-export default function AddVerse({ formSubmitted, books }) {
+export default function AddVerse({ formSubmitted, books, userId }) {
     const [bookId, setBookId] = useState(1);
     const [chapters, setChapters] = useState([]);
     const [verseList, setVerseList] = useState([]);
@@ -20,7 +20,7 @@ export default function AddVerse({ formSubmitted, books }) {
     let addVerse = (event) => {
         event.preventDefault();
         if (verse.book != '' && verse.chapterId && verse.verseId && verse.text != '') {
-            AddNewVerse(verse)
+            AddNewVerse(verse, userId)
                 .then((data) => {
                     formSubmitted();
                 })

@@ -4,7 +4,7 @@ import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 import Link from 'next/link';
 
-export default function VerseBox ({ verse, remove, update }) {
+export default function VerseBox ({ verse, remove, update, userId }) {
     const [inHoverState, setInHoverState] = useState(false);
 
     return (
@@ -12,7 +12,7 @@ export default function VerseBox ({ verse, remove, update }) {
             onMouseEnter={() => setInHoverState(true)}
             onMouseLeave={() => setInHoverState(false)}
         >
-            <Link href={`/verseGame/${verse.id}`}>
+            <Link href={`/verseGame/${userId}/${verse.id}`}>
                 <a className={styles.anchor}>
                     <div className={styles.leftSection}>
                         <h2>

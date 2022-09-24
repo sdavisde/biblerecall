@@ -1,0 +1,24 @@
+@import './Colors.scss';
+@import './Fonts.scss';
+@import './Breakpoints.scss';
+
+.container {
+    background-color: $primary_background;
+    background-size:16px 16px;
+    color: $font-color;
+}
+
+.main {
+    min-height: 100vh;
+    padding-bottom: 4rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.topSection {
+    display: flex;
+    align-items: center;
+}

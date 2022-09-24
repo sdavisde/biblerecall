@@ -6,19 +6,27 @@ export async function GetVerseIds() {
     return new Promise((resolve, reject) => {
         let verses = [];
 
-        let group = 'Group_2';
+        const usersRef = collection(database, 'Users');
 
-        const versesRef = collection(database, 'sean_davis', group, 'verses');
-
-        getDocs(versesRef)
+        getDocs(usersRef)
             .then((snapshot) => {
                 snapshot.docs.map(doc => {
-                    verses.push( doc.id );
+                    const versesRef = collection(database, 'Users', doc.id, 'verses');
+                    
+                    getDocs(versesRef)
+                        .then((colSnapshot) => {
+                            colSnapshot.docs.map(verse => {
+                                verses.push( { verseId: verse.id, userId: doc.id } );
+                            })
+                        })
                 });
                 
-                const paths = verses.map((verseId) => {
+                const paths = verses.map((verse) => {
                     return {
-                        params: { id: verseId }
+                        params: { 
+                            id: verse.verseId,
+                            userId: verse.userId
+                        }
                     };
                 });
 
@@ -28,16 +36,14 @@ export async function GetVerseIds() {
     });
 }
               
-export async function GetVerseData(id) {
-    return new Promise((resolve, reject) => {
-        const group = 'Group_2';
-    
-        const verseRef = doc(database, 'sean_davis', group, 'verses', id);
+export async function GetVerseData(id, userId) {
+    return new Promise((resolve, reject) => {    
+
+        const verseRef = doc(database, 'Users', userId, 'verses', id);
     
         getDoc(verseRef)
             .then((snapshot) => {
                 const verseData = snapshot.data();
-                console.log(verseData);
                 const verse = {...verseData, id: snapshot.id};
 
                 resolve(verse);

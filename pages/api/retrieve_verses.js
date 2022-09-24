@@ -4,10 +4,12 @@ import { doc, getDocs, collection } from 'firebase/firestore';
 export default function handler(req, res) {
     return new Promise((resolve, reject) => {
         let verses = [];
+        const { userId } = req.query;
 
-        let group = 'Group_2';
-    
-        const versesRef = collection(database, 'sean_davis', group, 'verses');
+        const group = 'Group_2';
+
+        // UserId > Group_2 > verses > ...
+        const versesRef = collection(database, 'Users', userId, 'verses');
     
         getDocs(versesRef)
             .then((snapshot) => {

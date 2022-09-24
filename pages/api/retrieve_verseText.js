@@ -5,12 +5,10 @@ export default function handler(req, res) {
     return new Promise((resolve, reject) => {
         const query = req.query;
         const { bookId, chapterId, verseId } = query;
-        console.log('in verse retrieval');
+        
         fetch(`https://bible-go-api.rkeplin.com/v1/books/${bookId}/chapters/${chapterId}/${verseId}?translation=ESV`)
         .then((res) => res.json())
         .then((data) => {
-
-            console.log(data);
 
             if (data)
                 res.status(200).json(data);
