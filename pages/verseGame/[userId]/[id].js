@@ -164,140 +164,126 @@ export default function VerseGame({ verseData, loggedIn, loggedOut }) {
     }
 
     return (
-        <>
-            <Layout>
-                <nav className={styles.navbar}>
-                    <DynamicLogin loggedIn={loggedIn} loggedOut={loggedOut}/>
-                </nav>
-                <div className={styles.topSection}>
-                    <div className={styles.title}>
-                        <h1>Bible</h1>
-                        <img className={styles.bible}/> 
-                        <h1>Recall</h1>          
+        <Layout>
+            <nav className={styles.navbar}>
+                <DynamicLogin loggedIn={loggedIn} loggedOut={loggedOut}/>
+            </nav>
+            <div className={styles.topSection}>
+                <div className={styles.title}>
+                    <h1>Bible</h1>
+                    <img className={styles.bible}/> 
+                    <h1>Recall</h1>          
+                </div>
+            </div>
+            <div className={styles.bottomSection}>
+                {
+                    (router.isFallback)
+                    ?
+                    (<div>Loading...</div>)
+                    :
+                    (
+                    <>
+                        <div className={styles.title}>
+                            <h1>{verseData.book} {verseData.chapter}:{verseData.verse}</h1>
+                        </div>
+                        <div className={styles.cardContainer}>
+                            <div className={styles.banner}>
+                                {
+                                    (verseComplete)
+                                    ?
+                                    (<div className={styles.win}>
+                                        <em>Good job memorizing this verse. Moving to next step...</em>
+                                    </div>)
+                                    :
+                                    (<div className={styles.info}>
+                                        <em>Type the first letter of each word to memorize this verse!</em>
+                                    </div>)
+                                }
+                            </div>
+                            <div className='verse_words'>
+                                <div className={styles.verseDisplay}>
+                                    {displayedText.map((text, index) => 
+                                        <div id={'verse_word_'+index} 
+                                            key={index} 
+                                            className={`verse_word ${index == 0 ? 'target' : ''}`}>{text}</div>
+                                    )}
+                                </div>
+                            </div>
+                            <div className={styles.answerBox}>
+                                {
+                                    (loading)
+                                    &&
+                                    <div className={styles.gifContainer}>
+                                        <Image src={loadingGif} width='218px' height='149px'/>
+                                    </div>
+                                }
+                                <input placeholder='Answer Here!' 
+                                    onKeyDown={(e) => onKeyDown(e)}
+                                    onChange={(e) => onChange(e)}
+                                    className={styles.input}
+                                    ref={input}
+                                    autoFocus />
+                            </div>
+                            <div className={styles.steps}>
+                                <div className={styles.step} onClick={() => setGameMode(1)}>
+                                    Step 1
+                                </div>
+                                <div className={styles.step} onClick={() => setGameMode(2)}>
+                                    Step 2
+                                </div>
+                                <div className={styles.step} onClick={() => setGameMode(3)}>
+                                    Step 3
+                                </div>
+                            </div>
+                            <div className={styles.progressBarContainer}>
+                                <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
+                            </div>
+                            <div className={styles.leftContainer}>
+                                <Link href={"/"}>
+                                    <Image 
+                                        src={arrow}
+                                        width="50px"
+                                        height="50px"    
+                                    />
+                                </Link>
+                            </div>
+                        </div>
+                    </>
+                    )
+                }
+            </div>
+            <Lightbox key={finished} control={finished} showClose={false} simpleLayout={true}>
+                <h1>Great Job!</h1>
+                <p>
+                    You&apos;ve memorized this verse. Try memorizing another one!
+                </p>
+                <Image src={loadingGif} width='218px' height='149px'/>
+            </Lightbox>
+            <Lightbox key={isTransition} control={isTransition} showClose={false} simpleLayout={true}>
+                <h1>Well Done!</h1>
+                <p>
+                    You&apos;ve completed this step. Would you like to re-do this step, or move forward?
+                </p>
+                <div className={styles.buttons}>
+                    <div onClick={() => retryStep()} className={styles.retry}>
+                        <Image src={retry} width='218px' height='149px'/>
+                    </div>
+                    <div onClick={() => moveForward()} className={styles.forward}>
+                        <Image src={forward} width='218px' height='149px'/>
                     </div>
                 </div>
-                <div className={styles.bottomSection}>
-                    {
-                        (router.isFallback)
-                        ?
-                        (<div>Loading...</div>)
-                        :
-                        (
-                        <>
-                            <div className={styles.title}>
-                                <h1>{verseData.book} {verseData.chapter}:{verseData.verse}</h1>
-                            </div>
-                            <div className={styles.cardContainer}>
-                                <div className={styles.banner}>
-                                    {
-                                        (verseComplete)
-                                        ?
-                                        (<div className={styles.win}>
-                                            <em>Good job memorizing this verse. Moving to next step...</em>
-                                        </div>)
-                                        :
-                                        (<div className={styles.info}>
-                                            <em>Type the first letter of each word to memorize this verse!</em>
-                                        </div>)
-                                    }
-                                </div>
-                                <div className='verse_words'>
-                                    <div className={styles.verseDisplay}>
-                                        {displayedText.map((text, index) => 
-                                            <div id={'verse_word_'+index} 
-                                                key={index} 
-                                                className={`verse_word ${index == 0 ? 'target' : ''}`}>{text}</div>
-                                        )}
-                                    </div>
-                                </div>
-                                <div className={styles.answerBox}>
-                                    {
-                                        (loading)
-                                        &&
-                                        <div className={styles.gifContainer}>
-                                            <Image src={loadingGif} width='218px' height='149px'/>
-                                        </div>
-                                    }
-                                    <input placeholder='Answer Here!' 
-                                        onKeyDown={(e) => onKeyDown(e)}
-                                        onChange={(e) => onChange(e)}
-                                        className={styles.input}
-                                        ref={input}
-                                        autoFocus />
-                                </div>
-                                <div className={styles.steps}>
-                                    <div className={styles.step} onClick={() => setGameMode(1)}>
-                                        Step 1
-                                    </div>
-                                    <div className={styles.step} onClick={() => setGameMode(2)}>
-                                        Step 2
-                                    </div>
-                                    <div className={styles.step} onClick={() => setGameMode(3)}>
-                                        Step 3
-                                    </div>
-                                </div>
-                                <div className={styles.progressBarContainer}>
-                                    <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
-                                </div>
-                                <div className={styles.leftContainer}>
-                                    <Link href={"/"}>
-                                        <Image 
-                                            src={arrow}
-                                            width="50px"
-                                            height="50px"    
-                                        />
-                                    </Link>
-                                </div>
-                            </div>
-                        </>
-                        )
-                    }
+            </Lightbox>
+            <Lightbox key={failed} control={failed} showClose={false} simpleLayout={true}>
+                <h1>Sorry!</h1>
+                <p>
+                    You got less than 90% of this verse correct. Try mastering this step before continuing!
+                </p>
+                <Image src={loadingGif} width='218px' height='149px'/>
+                <div className={styles.progressBarContainer}>
+                    <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
                 </div>
-                {
-                    finished 
-                    &&
-                    (<Lightbox showClose={false} simpleLayout={true}>
-                        <h1>Great Job!</h1>
-                        <p>
-                            You&apos;ve memorized this verse. Try memorizing another one!
-                        </p>
-                        <Image src={loadingGif} width='218px' height='149px'/>
-                    </Lightbox>)
-                }
-                {
-                    isTransition
-                    &&
-                    (<Lightbox showClose={false} simpleLayout={true}>
-                        <h1>Well Done!</h1>
-                        <p>
-                            You&apos;ve completed this step. Would you like to re-do this step, or move forward?
-                        </p>
-                        <div className={styles.buttons}>
-                            <div onClick={() => retryStep()} className={styles.retry}>
-                                <Image src={retry} width='218px' height='149px'/>
-                            </div>
-                            <div onClick={() => moveForward()} className={styles.forward}>
-                                <Image src={forward} width='218px' height='149px'/>
-                            </div>
-                        </div>
-                    </Lightbox>)
-                }
-                {
-                    failed 
-                    &&
-                    (<Lightbox showClose={false} simpleLayout={true}>
-                        <h1>Sorry!</h1>
-                        <p>
-                            You got less than 90% of this verse correct. Try mastering this step before continuing!
-                        </p>
-                        <Image src={loadingGif} width='218px' height='149px'/>
-                        <div className={styles.progressBarContainer}>
-                            <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
-                        </div>
-                    </Lightbox>)
-                }
-            </Layout>
-        </>
+            </Lightbox>
+        </Layout>
 	);
 }
 

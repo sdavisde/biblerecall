@@ -5,7 +5,8 @@ import CloseButton from './CloseButton'
 export default function Lightbox({ ...props }) {
 
 	return (
-        <div className={styles.lightboxOverlay}>
+        props.control &&
+            <div className={styles.lightboxOverlay}>
             {
                 props.simpleLayout
                 ?
