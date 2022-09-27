@@ -19,7 +19,7 @@ export default function Login({ loggedIn, loggedOut }) {
         };
 
         gapi.load('client:auth2', initClient);
-    });
+    }, [profile, clientId]);
 
     const onSuccess = (res) => {
         setProfile(res.profileObj);
@@ -36,18 +36,16 @@ export default function Login({ loggedIn, loggedOut }) {
     return ( 
         <>
             {profile ? (
-                <div className={styles.loginContainer}>
-                    <div onClick={() => setShowLogout(true)}>
+                <div className={styles.loginContainer} onMouseOut={() => setShowLogout(false)}>
+                    <div onMouseOver={() => setShowLogout(true)} >
                         <Image className={styles.profilePic} src={profile.imageUrl ? profile.imageUrl : dummy} alt="user image" width={50} height={50} />
                     </div>
                     <div className={styles.logOutTooltip}>
-                        {showLogout && 
-                            <GoogleLogout
-                                className={styles.logOut}
-                                clientId={clientId} 
-                                buttonText="Log Out" 
-                                onLogoutSuccess={logOut} />
-                        }
+                        <GoogleLogout
+                            className={styles.logOut}
+                            clientId={clientId} 
+                            buttonText="Log Out" 
+                            onLogoutSuccess={logOut} />
                     </div>
                 </div>
             ) : (

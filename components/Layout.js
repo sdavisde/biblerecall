@@ -18,7 +18,7 @@ export default function Layout({ ...props }) {
                 <div className={styles.topSection}>
                     <div className={styles.title}>
                         <h1>Bible</h1>
-                        <Image src={bible} width={100} height={75} className={styles.bible}/> 
+                        <Image src={bible} width={100} height={75} className={styles.bible} alt=''/> 
                         <h1>Recall</h1>          
                     </div>
                 </div>

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import styles from '../../../styles/VerseGame.module.scss';
 import Layout from '../../../components/Layout';
 import Lightbox from '../../../components/Lightbox';
-import DynamicLogin from '../../../components/DynamicLogin';
 import ProgressBar from '../../../components/ProgressBar';
 import arrow from '../../../assets/arrow.png';
 import loadingGif from '../../../assets/loading.gif';
@@ -164,17 +163,7 @@ export default function VerseGame({ verseData, loggedIn, loggedOut }) {
     }
 
     return (
-        <Layout>
-            <nav className={styles.navbar}>
-                <DynamicLogin loggedIn={loggedIn} loggedOut={loggedOut}/>
-            </nav>
-            <div className={styles.topSection}>
-                <div className={styles.title}>
-                    <h1>Bible</h1>
-                    <img className={styles.bible}/> 
-                    <h1>Recall</h1>          
-                </div>
-            </div>
+        <Layout loggedIn={loggedIn} loggedOut={loggedOut}>
             <div className={styles.bottomSection}>
                 {
                     (router.isFallback)
@@ -214,7 +203,7 @@ export default function VerseGame({ verseData, loggedIn, loggedOut }) {
                                     (loading)
                                     &&
                                     <div className={styles.gifContainer}>
-                                        <Image src={loadingGif} width='218px' height='149px'/>
+                                        <Image src={loadingGif} width='218px' height='149px' alt=''/>
                                     </div>
                                 }
                                 <input placeholder='Answer Here!' 
@@ -239,11 +228,12 @@ export default function VerseGame({ verseData, loggedIn, loggedOut }) {
                                 <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
                             </div>
                             <div className={styles.leftContainer}>
-                                <Link href={"/"}>
+                                <Link href={"/"} passHref={true}>
                                     <Image 
                                         src={arrow}
                                         width="50px"
-                                        height="50px"    
+                                        height="50px"
+                                        alt='Back Arrow'
                                     />
                                 </Link>
                             </div>
@@ -257,7 +247,7 @@ export default function VerseGame({ verseData, loggedIn, loggedOut }) {
                 <p>
                     You&apos;ve memorized this verse. Try memorizing another one!
                 </p>
-                <Image src={loadingGif} width='218px' height='149px'/>
+                <Image src={loadingGif} width='218px' height='149px' alt=''/>
             </Lightbox>
             <Lightbox key={isTransition} control={isTransition} showClose={false} simpleLayout={true}>
                 <h1>Well Done!</h1>
@@ -266,10 +256,10 @@ export default function VerseGame({ verseData, loggedIn, loggedOut }) {
                 </p>
                 <div className={styles.buttons}>
                     <div onClick={() => retryStep()} className={styles.retry}>
-                        <Image src={retry} width='218px' height='149px'/>
+                        <Image src={retry} width='218px' height='149px' alt='Retry'/>
                     </div>
                     <div onClick={() => moveForward()} className={styles.forward}>
-                        <Image src={forward} width='218px' height='149px'/>
+                        <Image src={forward} width='218px' height='149px' alt='Continue'/>
                     </div>
                 </div>
             </Lightbox>
@@ -278,7 +268,7 @@ export default function VerseGame({ verseData, loggedIn, loggedOut }) {
                 <p>
                     You got less than 90% of this verse correct. Try mastering this step before continuing!
                 </p>
-                <Image src={loadingGif} width='218px' height='149px'/>
+                <Image src={loadingGif} width='218px' height='149px' alt=''/>
                 <div className={styles.progressBarContainer}>
                     <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
                 </div>
