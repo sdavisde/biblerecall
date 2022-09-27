@@ -6,8 +6,7 @@ import VerseBox from '../components/VerseBox';
 import Lightbox from '../components/Lightbox';
 import AddVerse from '../components/AddVerse';
 import EditVerse from '../components/EditVerse';
-import DynamicLogin from '../components/DynamicLogin';
-import { GetAllVerses, GetAllBooks } from '../db_access/pageData';
+import { GetAllBooks } from '../db_access/pageData';
 
 export default function Home({ books, userId, loggedIn, loggedOut }) {
     const [loading, setLoading] = useState(false);
@@ -53,17 +52,7 @@ export default function Home({ books, userId, loggedIn, loggedOut }) {
     };
 
     return (
-        <Layout>
-            <nav className={styles.navbar}>
-                <DynamicLogin loggedIn={loggedIn} loggedOut={loggedOut}/>
-            </nav>
-            <div className={styles.topSection}>
-                <div className={styles.title}>
-                    <h1>Bible</h1>
-                    <img className={styles.bible}/> 
-                    <h1>Recall</h1>          
-                </div>
-            </div>
+        <Layout loggedIn={loggedIn} loggedOut={loggedOut}>
             <div className={styles.bottomSection}>
                 <div className={styles.verseList}>
                     <div>
