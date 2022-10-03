@@ -27,7 +27,7 @@ export default function Home({ books, userId, loggedIn, loggedOut }) {
     let deleteVerse = (id, e) => {
         setLoading(true);
         e.stopPropagation();
-        fetch(`/api/delete_verse?id=${id}`)
+        fetch(`/api/delete_verse?userId=${userId}&id=${id}`)
             .then((res) => res.json())
             .then((data) => {
                 getVerses();
