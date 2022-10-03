@@ -8,9 +8,11 @@ export default function GoogleLogin ({ isLogin, signIn, logOut }) {
     
     return (
         <div className={styles.container} onClick={isLogin ? signIn : logOut}>
-            <Image src={logo} width={32} height={32} alt='' className={styles.logo}/>
+            <div className={styles.logoContainer}>
+                <Image src={logo} width={32} height={32} alt='' className={styles.logo}/>
+            </div>            
             {isLogin ? (
-                <p>Sign In With Google</p>
+                <p>Sign In</p>
             ) : (
                 <p>Log Out</p>
             )}
