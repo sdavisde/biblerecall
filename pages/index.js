@@ -44,9 +44,14 @@ export default function Home({ books, userId, loggedIn, loggedOut }) {
 
     let getVerses = (id) => {
         setLoading(true);
+
+        if (!id && !userId) return;
+
         fetch(`api/retrieve_verses?userId=${id ? id : userId}`)
             .then((res) => res.json())
             .then((data) => {
+                if (!Array.isArray(data)) return;
+
                 setVerseList(data);
             })
     };
@@ -58,12 +63,12 @@ export default function Home({ books, userId, loggedIn, loggedOut }) {
                     <div>
                         {(!verseList || verseList.length == 0) ? (
                             userId ? (
-                            <p className={styles.noVerseList}>No Verses on your account yet! Add one below!</p>
+                                <p className={styles.noVerseList}>No Verses on your account yet! Add one below!</p>
                             ) : (
                                 <p className={styles.noVerseList}>Log in to see your verses!</p>
                             )
                         ) : (
-                            <>
+                            <> 
                                 {verseList.map((verse, index) =>
                                     <VerseBox key={index} verse={verse} remove={deleteVerse} update={updateVerse} userId={userId}/>
                                 )}
@@ -73,26 +78,22 @@ export default function Home({ books, userId, loggedIn, loggedOut }) {
                         }
                         
 
-                        {
-                            lightboxDisplay 
-                            &&
-                            (<Lightbox toggleDisplay={() => toggleDisplay('None')} showClose={true}>
-                                {lightboxContent == 'Add' && 
-                                    <AddVerse 
-                                        books={books} 
-                                        formSubmitted={() => {getVerses(); toggleDisplay('None')}}
-                                        userId={userId}
-                                        key={userId}/>
-                                }
-                                {lightboxContent == 'Edit' && 
-                                    <EditVerse 
-                                        books={books} 
-                                        verse={verse} 
-                                        id={verse.id}
-                                        formSubmitted={() => {getVerses(); toggleDisplay('None')}}/>
-                                }
-                            </Lightbox>)
-                        }
+                        {<Lightbox key={lightboxDisplay} control={lightboxDisplay} toggleDisplay={() => toggleDisplay('None')} showClose={true}>
+                            {lightboxContent == 'Add' && 
+                                <AddVerse 
+                                    books={books} 
+                                    formSubmitted={() => {getVerses(); toggleDisplay('None')}}
+                                    userId={userId}
+                                    key={userId}/>
+                            }
+                            {lightboxContent == 'Edit' && 
+                                <EditVerse 
+                                    books={books} 
+                                    verse={verse} 
+                                    id={verse.id}
+                                    formSubmitted={() => {getVerses(); toggleDisplay('None')}}/>
+                            }
+                        </Lightbox>}
                         <div className={styles.btnContainer}>
                             {userId &&
                                 <AddButton onClick={() => toggleDisplay('Add')} />
