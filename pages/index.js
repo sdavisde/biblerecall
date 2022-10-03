@@ -8,7 +8,7 @@ import AddVerse from '../components/AddVerse';
 import EditVerse from '../components/EditVerse';
 import { GetAllBooks } from '../db_access/pageData';
 
-export default function Home({ books, userId, loggedIn, loggedOut }) {
+export default function Home({ books, userId, GlobalLogin, GlobalLogout }) {
     const [loading, setLoading] = useState(false);
     const [verseList, setVerseList] = useState(null);
     const [lightboxDisplay, setLightboxDisplay] = useState(false);
@@ -17,6 +17,10 @@ export default function Home({ books, userId, loggedIn, loggedOut }) {
 
     useEffect(() => {
         getVerses(userId);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000)
     }, [userId])
 
     let toggleDisplay = (target) => {
@@ -31,6 +35,7 @@ export default function Home({ books, userId, loggedIn, loggedOut }) {
             .then((res) => res.json())
             .then((data) => {
                 getVerses();
+                setLoading(false);
             })
     };
 
@@ -51,31 +56,39 @@ export default function Home({ books, userId, loggedIn, loggedOut }) {
             .then((res) => res.json())
             .then((data) => {
                 if (!Array.isArray(data)) return;
-
+                
                 setVerseList(data);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 1500)
             })
     };
 
     return (
-        <Layout loggedIn={loggedIn} loggedOut={loggedOut}>
+        <Layout GlobalLogin={GlobalLogin} GlobalLogout={GlobalLogout}>
             <div className={styles.bottomSection}>
                 <div className={styles.verseList}>
                     <div>
-                        {(!verseList || verseList.length == 0) ? (
-                            userId ? (
-                                <p className={styles.noVerseList}>No Verses on your account yet! Add one below!</p>
+                        {
+                            loading ? (
+                                <p className={styles.black}>Loading...</p>
                             ) : (
-                                <p className={styles.noVerseList}>Log in to see your verses!</p>
+                                (!verseList || verseList.length == 0) ? (
+                                    userId ? (
+                                        <p className={styles.black}>No verses on your account yet! Add one below!</p>
+                                    ) : (
+                                        <p className={styles.black}>Log in to see your verses!</p>
+                                    )
+                                ) : (
+                                    <> 
+                                        {verseList.map((verse, index) =>
+                                            <VerseBox key={index} verse={verse} remove={deleteVerse} update={updateVerse} userId={userId}/>
+                                        )}
+                                    </>
+                                )
                             )
-                        ) : (
-                            <> 
-                                {verseList.map((verse, index) =>
-                                    <VerseBox key={index} verse={verse} remove={deleteVerse} update={updateVerse} userId={userId}/>
-                                )}
-                            </>
-                        )
-
                         }
+                        
                         
 
                         {<Lightbox key={lightboxDisplay} control={lightboxDisplay} toggleDisplay={() => toggleDisplay('None')} showClose={true}>

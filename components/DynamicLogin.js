@@ -4,6 +4,6 @@ const DynamicLoginWithNoSSR = dynamic(() => import('./Login'), {
     ssr: false
 })
 
-export default function DynamicLogin ({ loggedIn, loggedOut }) {
-    return <DynamicLoginWithNoSSR loggedIn={loggedIn} loggedOut={loggedOut}/>
+export default function DynamicLogin ({ GlobalLogin, GlobalLogout }) {
+    return <DynamicLoginWithNoSSR GlobalLogin={GlobalLogin} GlobalLogout={GlobalLogout}/>
 } 

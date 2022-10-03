@@ -4,11 +4,11 @@ import { useState } from 'react';
 function MyApp({ Component, pageProps }) {
     const [userId, setUserId] = useState(null);
 
-    let loggedIn = (googleId) => {
+    let GlobalLogin = (googleId) => {
         setUserId(googleId);
     }
 
-    let loggedOut = () => {
+    let GlobalLogout = () => {
         setUserId(null);
     }
 
@@ -16,8 +16,8 @@ function MyApp({ Component, pageProps }) {
         {...pageProps} 
         userId={userId} 
         setUserId={setUserId} 
-        loggedIn={loggedIn}
-        loggedOut={loggedOut}/>
+        GlobalLogin={GlobalLogin}
+        GlobalLogout={GlobalLogout}/>
 }
 
 export default MyApp

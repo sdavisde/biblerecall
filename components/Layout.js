@@ -14,7 +14,7 @@ export default function Layout({ ...props }) {
                 <link rel="icon" href="/bible.png" />
             </Head>
             <main className={styles.main}>
-                <Navbar loggedIn={props.loggedIn} loggedOut={props.loggedOut}/>
+                <Navbar GlobalLogin={props.GlobalLogin} GlobalLogout={props.GlobalLogout}/>
                 <div className={styles.topSection}>
                     <div className={styles.title}>
                         <h1>Bible</h1>

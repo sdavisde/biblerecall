@@ -14,7 +14,7 @@ import forward from '../../../assets/forward.png';
 import { GetVerseIds, GetVerseData } from '../../../db_access/pageData';
 import $ from 'jquery';
 
-export default function VerseGame({ verseData, loggedIn, loggedOut }) {
+export default function VerseGame({ verseData, GlobalLogin, GlobalLogout }) {
     const [verseComplete, setVerseComplete] = useState(false);
     const [isTransition, setIsTransition] = useState(false);
     const [finished, setFinished] = useState(false);
@@ -163,7 +163,7 @@ export default function VerseGame({ verseData, loggedIn, loggedOut }) {
     }
 
     return (
-        <Layout loggedIn={loggedIn} loggedOut={loggedOut}>
+        <Layout GlobalLogin={GlobalLogin} GlobalLogout={GlobalLogout}>
             <div className={styles.bottomSection}>
                 {
                     (router.isFallback)

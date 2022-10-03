@@ -6,18 +6,17 @@ export default function handler(req, res) {
         let verses = [];
         const { userId } = req.query;
 
-        const group = 'Group_2';
+        console.log(`in retrieve_verses USERID: ${userId}`)
 
         // UserId > Group_2 > verses > ...
         const versesRef = collection(database, 'Users', userId, 'verses');
-    
         getDocs(versesRef)
             .then((snapshot) => {
                 snapshot.docs.map(doc => {
                     let verseData = doc.data();
                     verses.push({...verseData, id: doc.id});
                 });
-        
+                
                 if (verses)
                     res.status(200).json(verses);
                 else if (verses.count == 0)

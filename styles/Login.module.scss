@@ -3,27 +3,25 @@
     align-items: center;
     flex-direction:row;
     color: black;
-    // position: relative;
+    margin: 5px 0px 0 0px;
 
-    .profilePic {
-        border-radius: 25px;
-        transform: scale(0.8);
-    }
-
-    .logOutTooltip {
-        // position: absolute;
-        // top: 100%;
+    .profileContainer {
+        display: flex;
         
-        .logOut {
+        .profilePic {
+            border-radius: 25px;
             transform: scale(0.8);
-            margin-bottom: 4px;
-        }
+            align-self: center;
+        }    
     }
-    
+
+
 }
 
 
 .signIn {
-    transform: scale(0.8);
+    color:black;
+    // transform: scale(0.8);
+    cursor: pointer;
     margin: 5px 0px 5px 5px;
 }
