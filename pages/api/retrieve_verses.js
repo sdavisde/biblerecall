@@ -1,12 +1,12 @@
 import { database } from '../../firebaseConfig';
-import { doc, getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
               
 export default function handler(req, res) {
     return new Promise((resolve, reject) => {
         let verses = [];
         const { userId } = req.query;
 
-        console.log(`in retrieve_verses USERID: ${userId}`)
+        console.log(`in retrieve_verses USERID: ${userId}`);
 
         // UserId > Group_2 > verses > ...
         const versesRef = collection(database, 'Users', userId, 'verses');

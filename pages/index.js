@@ -60,7 +60,7 @@ export default function Home({ books, userId, GlobalLogin, GlobalLogout }) {
                 setVerseList(data);
                 setTimeout(() => {
                     setLoading(false);
-                }, 1500)
+                }, 1000)
             })
     };
 

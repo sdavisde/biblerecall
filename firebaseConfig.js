@@ -5,8 +5,10 @@ import {
     query,
     getDocs,
     collection,
+    doc,
     where,
     addDoc,
+    setDoc,
 } from "firebase/firestore";
 import {
     GoogleAuthProvider,
@@ -38,16 +40,17 @@ const signInWithGoogle = async () => {
     try {
         const res = await signInWithPopup(auth, googleProvider);
         const user = res.user;
+        console.log(JSON.stringify(user));
         const q = query(collection(database, "Users"), where("uid", "==", user.uid));
         const docs = await getDocs(q);
-        if (docs.docs.length === 0) {
-            await addDoc(collection(database, "Users"), {
+        // if (docs.docs.length === 0) {
+            await setDoc(doc(database, 'Users', user.uid), {
                 uid: user.uid,
                 name: user.displayName,
                 authProvider: "google",
                 email: user.email,
-            });
-        }
+            })
+        // }
     } catch (err) {
         console.error(err);
         alert(err.message);
