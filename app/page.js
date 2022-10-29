@@ -9,7 +9,7 @@ export default function Layout({ ...props }) {
             <div className={styles.section}>
                 <div className={styles.title}>
                     <h1>Bible</h1>
-                    <Image src={bible} className={styles.bible} alt='Bible Logo' placeholder='blur' width={1487} height={150}/> 
+                    <Image src={bible} className={styles.bible} alt='Bible Logo' width={200} height={75}/> 
                     <h1>Recall</h1>          
                 </div>
                 <p className={styles.message}>

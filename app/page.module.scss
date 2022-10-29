@@ -42,16 +42,16 @@
 
     .bible {
         content: url('../assets/bible.png');
-        width: 19%;
+        width: 50%;
         aspect-ratio: 1.5/1;
         margin: 0 1% 1% 1%;
 
         @media screen and (min-width: $bp-tablet) {
-            width: 10%;
+            width: 75%;
         }
 
         @media screen and (min-width: $bp-desktop) {
-            width: 7%;
+            width: 100%;
         }
     }
 }
