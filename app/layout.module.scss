@@ -4,4 +4,10 @@
 
 .light {
     background-color: $primary_background;
+    color: $dark-font-color;
+}
+
+.topSection {
+    display: flex;
+    align-items: center;
 }

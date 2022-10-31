@@ -1,6 +1,10 @@
+import Navbar from './NavBar';
+import AuthContext from './AuthContext';
 import styles from './layout.module.scss';
 
 export default function RootLayout({ children }) {
+    // Manage auth state?
+
     return (
         <html>
             <head>
@@ -9,7 +13,10 @@ export default function RootLayout({ children }) {
                 <link rel="icon" href="/bible.png" />
             </head>
             <body className={styles.light}>
-                {children}
+                <AuthContext>
+                    <Navbar />
+                    {children}
+                </AuthContext>
             </body>
         </html>
     )
