@@ -1,53 +1,44 @@
-// import { useEffect, useState } from 'react';
-// import { auth, signInWithGoogle, logout } from "../firebaseConfig";
-// import { useAuthState } from "react-firebase-hooks/auth";
-// import { useSession, signIn, signOut } from "next-auth/react";
+'use client';
+
 import Image from 'next/image';
-// import GoogleLogin from '../components/GoogleLogin';
-import dummy from '../assets/dummy_profile_pic.png';
 import styles from '../styles/Login.module.scss';
+import { useState } from 'react';
+import { useSession, signOut } from "next-auth/react";
 
-export default function Login({ ...props }) {
+/* 
+ * session.user has name, email, and image attributes
+*/
 
-    return (
-        <>
-            <p>Not Logged In</p>
-            <Image src={dummy} width={50} height={50} alt='Login Image' className={styles.image}/>
-        </>
-    )
-    // const { data: session } = useSession();
+export default function Login() {
+    const { data: session, status } = useSession();
+    const [ inHover, setInHover ] = useState(false);
 
-    // if(session) {
-    //     return <>
-    //         Signed in as {session.user.email} <br/>
-    //         <button onClick={() => signOut()}>Sign out</button>
-    //         </>
-    // }
-    // return <>
-    //     Not signed in <br/>
-    //     <button onClick={() => signIn()}>Sign in</button>
-    // </>
-
-    // const onSuccess = () => {
-    // }
-    
-    // const logOut = () => {
-    // };
-
-    // return ( 
-    //     <div className={styles.loginContainer} onMouseOut={() => setShowLogout(false)}>
-    //         {profile ? (
-    //             <>
-    //                 <div className={styles.profileContainer} onMouseOver={() => setShowLogout(true)} >
-    //                     <Image className={styles.profilePic} src={profile.imageUrl ? profile.imageUrl : dummy} alt="user image" width={50} height={50} />
-    //                 </div>
-    //                 <div className={styles.logOutTooltip}>
-    //                     <GoogleLogin isLogin={false} logOut={logOut}/>
-    //                 </div>
-    //             </>
-    //         ) : (
-    //             // <GoogleLogin isLogin={true} signIn={signInWithGoogle}/>
-    //         )}
-    //     </div>
-    // )
+    if (status === "authenticated") {
+        return (
+            <>
+                <p> Signed in as {session.user.email}</p>
+                <div className={styles.profileContainer} onMouseEnter={() => setInHover(true)} onMouseLeave={() => setInHover(false)}>
+                    <Image src={session.user.image} 
+                        width={50} 
+                        height={50} 
+                        alt='Profile Pic' 
+                        className={styles.image}/>
+                    
+                    {inHover &&
+                        <button onClick={() => signOut()}>
+                            Sign out
+                        </button>
+                    }
+                </div>
+            </>
+        )
+    }
+    else if (status === "unauthenticated") {
+        // if status is unathenticated, we don't want to show a loading text
+        return (<></>)
+    }
+    else {
+        // if status is not one of the above, it is loading
+        return (<p>...</p>)
+    }
 }
