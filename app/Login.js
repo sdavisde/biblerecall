@@ -25,7 +25,7 @@ export default function Login() {
                         className={styles.image}/>
                     
                     {inHover &&
-                        <button onClick={() => signOut()}>
+                        <button onClick={() => signOut({ callbackUrl: '/' })}>
                             Sign out
                         </button>
                     }

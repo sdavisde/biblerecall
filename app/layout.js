@@ -15,7 +15,9 @@ export default function RootLayout({ children }) {
             <body className={styles.light}>
                 <AuthContext>
                     <Navbar />
-                    {children}
+                    <div className={styles.pageContainer}>
+                        {children}
+                    </div>
                 </AuthContext>
             </body>
         </html>

@@ -1,11 +1,12 @@
 'use client';
 
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
+import Link from 'next/link';
 import styles from './page.module.scss';
 
 export default function Layout({ ...props }) {
     const { data: session, status } = useSession();
-    
+
     const popupCenter = (url, title) => {
         const dualScreenLeft = window.screenLeft ?? window.screenX;
         const dualScreenTop = window.screenTop ?? window.screenY;
@@ -31,32 +32,31 @@ export default function Layout({ ...props }) {
         newWindow?.focus();
     };
 
-    if (status === "unauthenticated") {
+    if (status === "unauthenticated") { // * COVER PAGE
         return (
             <main className={styles.main}>
                 <div className={styles.section}>
                 <h2>Please Login</h2>
-                <button onClick={() => popupCenter("/google-signin", "Sample Sign In")} >
+                <button onClick={() => signIn("google", {callbackUrl: "/home"})} > {/* "/google-signin", "Sample Sign In" */}
                     Sign In with Google
                 </button>
                 </div>
             </main>
         )
     }
-    else if (status === "authenticated") {
-        // User page. Should i redirect?
+    else if (status === "authenticated") { // * Redirect to user page
         return (
             <main className={styles.main}>
                 <div className={styles.section}>
                     <p>
                         You are logged in
                     </p>
+                    <Link href={'/home'}>Go to Home</Link>
                 </div>
             </main>
         )
     }
-    else {
-        // If in here, page is loading from a authentication change.
+    else { // * Loading from an authentication change
         return (
             <main className={styles.main}>
                 <div className={styles.section}>
