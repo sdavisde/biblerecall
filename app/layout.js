@@ -1,7 +1,7 @@
 'use client';
 
-import Navbar from './NavBar';
-import AuthContext from './AuthContext';
+import Navbar from './(c)/NavBar';
+import AuthContext from './(c)/AuthContext';
 import styles from './layout.module.scss';
 
 export default function RootLayout({ children }) {

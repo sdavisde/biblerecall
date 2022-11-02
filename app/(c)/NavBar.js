@@ -1,7 +1,7 @@
-import Login from './Login';
+import Profile from './Profile';
 import Image from 'next/image';
-import bible from '../assets/bible.png';
-import styles from '../styles/Navbar.module.scss';
+import bible from '../../assets/bible.png';
+import styles from '../../styles/Navbar.module.scss';
 
 export default function Navbar({ ...props }) {
     return ( 
@@ -12,7 +12,7 @@ export default function Navbar({ ...props }) {
                 <h1>Recall</h1>
             </div>
             <div className={styles.loginContainer}>
-                <Login />
+                <Profile />
             </div>
         </nav>
     )

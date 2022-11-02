@@ -1,11 +1,13 @@
 'use client';
 
 import { useSession, signIn } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './page.module.scss';
 
 export default function Layout({ ...props }) {
     const { data: session, status } = useSession();
+    const router = useRouter();
 
     const popupCenter = (url, title) => {
         const dualScreenLeft = window.screenLeft ?? window.screenX;
@@ -32,39 +34,32 @@ export default function Layout({ ...props }) {
         newWindow?.focus();
     };
 
-    if (status === "unauthenticated") { // * COVER PAGE
-        return (
-            <main className={styles.main}>
-                <div className={styles.section}>
-                <h2>Please Login</h2>
-                <button onClick={() => signIn("google", {callbackUrl: "/home"})} > {/* "/google-signin", "Sample Sign In" */}
-                    Sign In with Google
-                </button>
-                </div>
-            </main>
-        )
+    // * Redirect to user page before cover page is rendered
+    if (status === "authenticated") { 
+        router.push('/home');
     }
-    else if (status === "authenticated") { // * Redirect to user page
-        return (
-            <main className={styles.main}>
-                <div className={styles.section}>
-                    <p>
-                        You are logged in
-                    </p>
-                    <Link href={'/home'}>Go to Home</Link>
-                </div>
-            </main>
-        )
-    }
-    else { // * Loading from an authentication change
-        return (
-            <main className={styles.main}>
-                <div className={styles.section}>
+
+    // * Loading from an authentication change
+    return (
+        <main className={styles.main}>
+            <div className={styles.section}>
+                {status === "unauthenticated" 
+                ?
+                    <>
+                        <h2>Please Login</h2>
+                        <button onClick={() => popupCenter("/google-signin", "Sample Sign In") }>
+                            Sign In with Google
+                        </button>
+                    </>
+                :
                     <p className={styles.message}>
                         Loading...
                     </p>
-                </div>
-            </main>
-        )
-    }
+                }
+
+
+            </div>
+        </main>
+    )
+    
 }

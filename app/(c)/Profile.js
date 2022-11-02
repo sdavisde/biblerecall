@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import styles from '../styles/Login.module.scss';
+import styles from '../../styles/Login.module.scss';
 import { useState } from 'react';
 import { useSession, signOut } from "next-auth/react";
 
@@ -9,7 +9,7 @@ import { useSession, signOut } from "next-auth/react";
  * session.user has name, email, and image attributes
 */
 
-export default function Login() {
+export default function Profile() {
     const { data: session, status } = useSession();
     const [ inHover, setInHover ] = useState(false);
 
