@@ -12,17 +12,15 @@ export default function VerseBox ({ verse, remove, update, userId }) {
             onMouseEnter={() => setInHoverState(true)}
             onMouseLeave={() => setInHoverState(false)}
         >
-            <Link href={`/verseGame/${userId}/${verse.id}`}>
-                <a className={styles.anchor}>
-                    <div className={styles.leftSection}>
-                        <h2>
-                            {verse.book} {verse.chapter} : {verse.verse} <br/>
-                        </h2>
-                        <p>
-                            {verse.text}
-                        </p>
-                    </div>
-                </a>
+            <Link href={`/game/${userId}/${verse.id}`} className={styles.anchor}>
+                <div className={styles.leftSection}>
+                    <h2>
+                        {verse.book} {verse.chapter} : {verse.verse} <br/>
+                    </h2>
+                    <p>
+                        {verse.text}
+                    </p>
+                </div>
             </Link>
             
             {
