@@ -1,0 +1,18 @@
+.wrong {
+    color: $red;
+}
+
+.right {
+    color: $dark-font-color;
+}
+
+.hidden {
+    color: $primary_background;
+}
+
+.target::first-letter {
+    text-decoration: underline;
+    text-decoration-color: black;
+    // text-underline-position: under;
+    // text-decoration-style: solid;
+}

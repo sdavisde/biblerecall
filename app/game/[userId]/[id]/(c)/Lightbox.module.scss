@@ -1,0 +1,70 @@
+@import '../../../../../styles/Home.module.scss';
+@import '../../../../../styles/Breakpoints.scss';
+
+$overlay_color: rgba(39, 39, 48, 0.5);
+$lightbox_color: rgb(0, 74, 87);
+
+.lightboxOverlay {
+    background-color: $overlay_color;
+    display: flex;
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox {
+    position: relative;
+    background-color: $primary_background;
+    color: $dark-font-color;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+    border-radius: 15px;
+    border: 3px solid $secondary_color;
+    // box-shadow: 12px 12px black;
+    padding: 1em;
+
+    @media screen and (min-width: $bp-tablet) {
+        width: 60%;
+    }
+
+    @media screen and (min-width: $bp-desktop) {
+        width: 45%;
+    }
+
+    @media screen and (min-width: $bp-large) {
+        width: 35%;
+    }
+}  
+
+.simpleLightbox {
+    position: relative;
+    background-color: $primary_background;
+    color: $dark-font-color;
+    width: 75%;
+    text-align: center;
+    flex-direction: column;
+    margin: 1em;
+    border-radius: 15px;
+    border: 3px solid $secondary_color;
+    // box-shadow: 12px 12px black;
+    padding: 1em;
+
+    @media screen and (min-width: $bp-tablet) {
+        width: 60%;
+    }
+
+    @media screen and (min-width: $bp-desktop) {
+        width: 45%;
+    }
+
+    @media screen and (min-width: $bp-large) {
+        width: 35%;
+    }
+}  

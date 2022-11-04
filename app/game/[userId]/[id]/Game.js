@@ -1,23 +1,16 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState, useRef } from 'react';
 import Image from 'next/image';
-import styles from '../../../../styles/VerseGame.module.scss';
-import Lightbox from '../../../../components/Lightbox';
+import Lightbox from './(c)/Lightbox';
 import ProgressBar from '../../../../components/ProgressBar';
 import loadingGif from '../../../../assets/loading.gif';
 import retry from '../../../../assets/retry.png';
 import forward from '../../../../assets/forward.png';
-import { use } from 'react';
-import { GetVerseIds, GetVerseData } from '../../../../../db_access/pageData';
 import $ from 'jquery';
+import styles from './Game.module.scss';
 
-// Todo: Figure out how to make this work.
-
-export default function Game({ ...props }) {
-    const { data, error } = use(GetVerseData());
-
+export default function Game({ verseData }) {
     const [verseComplete, setVerseComplete] = useState(false);
     const [isTransition, setIsTransition] = useState(false);
     const [finished, setFinished] = useState(false);
@@ -38,7 +31,6 @@ export default function Game({ ...props }) {
     const [parity, setParity] = useState('odd');
     const [key, setKey] = useState(null);
     const [wordsCorrect, setWordsCorrect] = useState(0);
-    const router = useRouter();
     const input = useRef(null);
     const loading_time = 4000;
 
@@ -95,7 +87,7 @@ export default function Game({ ...props }) {
                 $(`.verse_word:nth-child(${index + 2})`).addClass('target');
 
             const target = textRefs[index];
-            const valid = target.word[0] == key.toLowerCase();
+            let valid = target.word[0] == key.toLowerCase();
 
             if (valid)
                 setWordsCorrect(prev => (prev + 1));
@@ -168,79 +160,69 @@ export default function Game({ ...props }) {
     return (
         <>
             <div className={styles.bottomSection}>
-                {
-                    (router.isFallback)
-                    ?
-                    (<div>Loading...</div>)
-                    :
-                    (
-                    <>
-                        <div className={styles.title}>
-                            <h1>{verseData.book} {verseData.chapter}:{verseData.verse}</h1>
+                <div className={styles.title}>
+                    <h1>{verseData.book} {verseData.chapter}:{verseData.verse}</h1>
+                </div>
+                <div className={styles.cardContainer}>
+                    <div className={styles.banner}>
+                        {
+                            (verseComplete)
+                            ?
+                            (<div className={styles.win}>
+                                <em>Good job memorizing this verse. Moving to next step...</em>
+                            </div>)
+                            :
+                            (<div className={styles.info}>
+                                <em>Type the first letter of each word to memorize this verse!</em>
+                            </div>)
+                        }
+                    </div>
+                    <div className='verse_words'>
+                        <div className={styles.verseDisplay}>
+                            {displayedText.map((text, index) => 
+                                <div id={'verse_word_'+index} 
+                                    key={index} 
+                                    className={`verse_word ${index == 0 ? 'target' : ''}`}>{text}</div>
+                            )}
                         </div>
-                        <div className={styles.cardContainer}>
-                            <div className={styles.banner}>
-                                {
-                                    (verseComplete)
-                                    ?
-                                    (<div className={styles.win}>
-                                        <em>Good job memorizing this verse. Moving to next step...</em>
-                                    </div>)
-                                    :
-                                    (<div className={styles.info}>
-                                        <em>Type the first letter of each word to memorize this verse!</em>
-                                    </div>)
-                                }
+                    </div>
+                    <div className={styles.answerBox}>
+                        {
+                            (loading)
+                            &&
+                            <div className={styles.gifContainer}>
+                                <Image src={loadingGif} width={218} height={149} alt=''/>
                             </div>
-                            <div className='verse_words'>
-                                <div className={styles.verseDisplay}>
-                                    {displayedText.map((text, index) => 
-                                        <div id={'verse_word_'+index} 
-                                            key={index} 
-                                            className={`verse_word ${index == 0 ? 'target' : ''}`}>{text}</div>
-                                    )}
-                                </div>
-                            </div>
-                            <div className={styles.answerBox}>
-                                {
-                                    (loading)
-                                    &&
-                                    <div className={styles.gifContainer}>
-                                        <Image src={loadingGif} width='218px' height='149px' alt=''/>
-                                    </div>
-                                }
-                                <input placeholder='Answer Here!' 
-                                    onKeyDown={(e) => onKeyDown(e)}
-                                    onChange={(e) => onChange(e)}
-                                    className={styles.input}
-                                    ref={input}
-                                    autoFocus />
-                            </div>
-                            <div className={styles.steps}>
-                                <div className={styles.step} onClick={() => setGameMode(1)}>
-                                    Step 1
-                                </div>
-                                <div className={styles.step} onClick={() => setGameMode(2)}>
-                                    Step 2
-                                </div>
-                                <div className={styles.step} onClick={() => setGameMode(3)}>
-                                    Step 3
-                                </div>
-                            </div>
-                            <div className={styles.progressBarContainer}>
-                                <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
-                            </div>
+                        }
+                        <input placeholder='Answer Here!' 
+                            onKeyDown={(e) => onKeyDown(e)}
+                            onChange={(e) => onChange(e)}
+                            className={styles.input}
+                            ref={input}
+                            autoFocus />
+                    </div>
+                    <div className={styles.steps}>
+                        <div className={styles.step} onClick={() => setGameMode(1)}>
+                            Step 1
                         </div>
-                    </>
-                    )
-                }
+                        <div className={styles.step} onClick={() => setGameMode(2)}>
+                            Step 2
+                        </div>
+                        <div className={styles.step} onClick={() => setGameMode(3)}>
+                            Step 3
+                        </div>
+                    </div>
+                    <div className={styles.progressBarContainer}>
+                        <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
+                    </div>
+                </div>
             </div>
             <Lightbox key={finished} control={finished} showClose={false} simpleLayout={true}>
                 <h1>Great Job!</h1>
                 <p>
                     You&apos;ve memorized this verse. Try memorizing another one!
                 </p>
-                <Image src={loadingGif} width='218px' height='149px' alt=''/>
+                <Image src={loadingGif} width={218} height={149} alt=''/>
             </Lightbox>
             <Lightbox key={isTransition} control={isTransition} showClose={false} simpleLayout={true}>
                 <h1>Well Done!</h1>
@@ -249,10 +231,10 @@ export default function Game({ ...props }) {
                 </p>
                 <div className={styles.buttons}>
                     <div onClick={() => retryStep()} className={styles.retry}>
-                        <Image src={retry} width='218px' height='149px' alt='Retry'/>
+                        <Image src={retry} width={218} height={149} alt='Retry'/>
                     </div>
                     <div onClick={() => moveForward()} className={styles.forward}>
-                        <Image src={forward} width='218px' height='149px' alt='Continue'/>
+                        <Image src={forward} width={218} height={149} alt='Continue'/>
                     </div>
                 </div>
             </Lightbox>
@@ -261,7 +243,7 @@ export default function Game({ ...props }) {
                 <p>
                     You got less than 90% of this verse correct. Try mastering this step before continuing!
                 </p>
-                <Image src={loadingGif} width='218px' height='149px' alt=''/>
+                <Image src={loadingGif} width={218} height={149} alt=''/>
                 <div className={styles.progressBarContainer}>
                     <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
                 </div>

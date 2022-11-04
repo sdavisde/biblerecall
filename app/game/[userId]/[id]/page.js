@@ -4,7 +4,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import arrow from '../../../../assets/arrow.png';
 import Image from 'next/image';
 import Link from 'next/link';
-// import Game from './Game';
+import Game from './Game';
 
 async function getVerse(userId, verseId) {
     console.log('getverses');
@@ -26,13 +26,12 @@ async function getVerse(userId, verseId) {
     });
 }
 
-export default async function Game({ params, searchParams }) {
+export default async function GamePage({ params, searchParams }) {
     const verse = await getVerse(params.userId, params.id);
 
     return (
         <>
-            <p>Verse: {JSON.stringify(verse)}</p>
-            {/* TODO: <Game /> */}
+            <Game verseData={verse}/>
             <Link href={"/home"}>
                 <Image 
                     src={arrow}
