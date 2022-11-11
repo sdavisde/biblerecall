@@ -206,13 +206,13 @@ export default function Game({ verseData }) {
                             autoFocus />
                     </div>
                     <div className={styles.steps}>
-                        <div className={styles.step} onClick={() => setGameMode(1)}>
+                        <div className={difficulty === 1 ? styles.activeStep : styles.step} onClick={() => setGameMode(1)}>
                             Step 1
                         </div>
-                        <div className={styles.step} onClick={() => setGameMode(2)}>
+                        <div className={difficulty === 2 ? styles.activeStep : styles.step} onClick={() => setGameMode(2)}>
                             Step 2
                         </div>
-                        <div className={styles.step} onClick={() => setGameMode(3)}>
+                        <div className={difficulty === 3 ? styles.activeStep : styles.step} onClick={() => setGameMode(3)}>
                             Step 3
                         </div>
                     </div>

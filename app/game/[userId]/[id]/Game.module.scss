@@ -89,10 +89,20 @@
 
     .step {
         width: 33.33%;
-        border: 1px solid black;
+        border: 1px solid $secondary_color;
         display: flex;
         justify-content: center;
         background-color: $tertiary_background;  
+        color: $font-color;
+        cursor: pointer;
+    }
+
+    .activeStep {
+        width: 33.33%;
+        border: 1px solid $secondary_color;
+        display: flex;
+        justify-content: center;
+        background-color: $light-font-color;  
         color: $font-color;
         cursor: pointer;
     }
