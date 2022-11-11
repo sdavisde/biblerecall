@@ -1,9 +1,10 @@
 import styles from '../../styles/AddVerse.module.scss';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { GetChapters, GetVerses } from '../../middleware/verse';
 
 export default function AddVerse({ addVerse, books }) {
+    const bookInput = useRef(null);
     const [bookId, setBookId] = useState(1);
     const [chapters, setChapters] = useState([]);
     const [verseList, setVerseList] = useState([]);
@@ -12,22 +13,27 @@ export default function AddVerse({ addVerse, books }) {
         chapterId: null,
         verseId: null,
         text: '',
-        group: 'Group_2'
+        group: ''
     });
     const [chapterSelectDisabled, setChapterSelectDisabled] = useState(true);
     const [verseSelectDisabled, setVerseSelectDisabled] = useState(true);
     
     let clearForm = () => {
+        console.log(bookInput);
+        bookInput.current.value = '';
         setBookId(1);
-            setChapters([]);
-            setVerseList([]);
-            setVerse({
-                book: '',
-                chapterId: null,
-                verseId: null,
-                text: '',
-                group: 'Group_2'
-            })
+        setChapters([]);
+        setVerseList([]);
+        setVerse({
+            book: '',
+            chapterId: null,
+            verseId: null,
+            text: '',
+            group: ''
+        })
+        setChapterSelectDisabled(true);
+        setVerseSelectDisabled(true);
+        setVerseText();
     };
 
     let formSubmitted = (event) => {
@@ -117,7 +123,7 @@ export default function AddVerse({ addVerse, books }) {
         <div className={styles.container}>
             <h1 className={styles.Heading}>New Verse</h1>
             <div className={styles.row}>
-                <input name="book" defaultValue={verse.book} onChange={onChange} placeholder="Enter Book" list="books" className={styles.book}/>
+                <input name="book" onChange={onChange} placeholder="Enter Book" list="books" className={styles.book} ref={bookInput}/>
                 <datalist id="books">
                     {books?.map((book, key) =>
                         <option key={key} id={book.id}>{book.name}</option>
