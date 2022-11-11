@@ -1,7 +1,7 @@
-import styles from '../styles/AddVerse.module.scss';
-import React, { useState, useEffect } from 'react';
+import styles from '../../styles/AddVerse.module.scss';
+import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { GetBooks, GetChapters, GetVerses, AddNewVerse } from '../middleware/verse';
+import { GetBooks, GetChapters, GetVerses } from '../../middleware/verse';
 
 export default function AddVerse({ addVerse, books }) {
     const [bookId, setBookId] = useState(1);
@@ -20,7 +20,18 @@ export default function AddVerse({ addVerse, books }) {
     let formSubmitted = (event) => {
         event.preventDefault();
         if (verse.book != '' && verse.chapterId && verse.verseId && verse.text != '') {
-            addVerse();
+            // TODO: Make this into a clear form function, also - it doesn't work yet.
+            addVerse(verse);
+            setBookId(1);
+            setChapters([]);
+            setVerseList([]);
+            setVerse({
+                book: '',
+                chapterId: null,
+                verseId: null,
+                text: '',
+                group: 'Group_2'
+            })
         }
     };
 
@@ -64,7 +75,7 @@ export default function AddVerse({ addVerse, books }) {
 
         switch (e.target.name) {
             case 'book':
-                let book = books.find(book => book.name === e.target.value);
+                let book = books?.find(book => book.name === e.target.value);
                 let bookName = e.target.value;
                 if (book) {
                     setBookId(book.id);
@@ -105,7 +116,7 @@ export default function AddVerse({ addVerse, books }) {
             <div className={styles.row}>
                 <input name="book" onChange={onChange} placeholder="Enter Book" list="books" className={styles.book}/>
                 <datalist id="books">
-                    {books.map((book, key) =>
+                    {books?.map((book, key) =>
                         <option key={key} id={book.id}>{book.name}</option>
                     )}
                 </datalist>

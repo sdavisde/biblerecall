@@ -3,31 +3,46 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import VerseBox from '../../components/VerseBox';
-import useSWR from 'swr';
-// import styles from './page.module.scss';
-
-// async function getVerses(userId) {
-//     console.log(`userId: ${userId}`);
-//     if (!userId) return [];
-
-
-// }
-
-const fetcher = (...args) => fetch(...args).then(res => res.json());
+import AddVerse from '../(c)/AddVerse';
+import getVerses from '../(c)/getVerses';
+import getBooks from '../(c)/getBooks';
 
 export default function HomePage({ ...props }) {
     const { data: session, status } = useSession();
     const router = useRouter();
-    // const verses = use(getVerses(session?.id));
 
-    const { data, error } = useSWR(`/api/retrieve_verses?userId=${session?.id}`, fetcher);
+    const { verses, refresh, path, error } = getVerses(session?.id);
+    const { books, isLoading, isError } = getBooks();
 
-    let deleteVerse = () => {
-        console.log('delete');
+    let deleteVerse = (verseId) => {
+        const userId = session.id;
+
+        if (userId) {
+            fetch(`/api/delete_verse?userId=${userId}&id=${verseId}`)
+            .then((res) => res.json())
+            .then((data) => {
+                // setLoading(true);
+                refresh();
+                // setLoading(false);
+            })
+        }
     }
     
     let updateVerse = () => {
         console.log('update');
+    }
+
+    let addVerse = (verse) => {
+        const userId = session.id;
+
+        if (userId) { // User is logged in
+            const { book, chapterId, verseId, text, group } = verse;
+            fetch(`/api/add_verse?book=${book}&chapter=${chapterId}&verseNumber=${verseId}&text=${text}&group=${group}&userId=${userId}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    refresh();
+                });
+        }
     }
 
     if (status === 'unauthenticated') {
@@ -39,9 +54,9 @@ export default function HomePage({ ...props }) {
             {status === 'authenticated' &&
                 <>
                     <h1>User Home Page</h1>
-                    <p>{session?.user?.name} - {session?.user?.email}</p>
+                    <AddVerse addVerse={addVerse} books={books}/>
                     <> 
-                        {data?.map((verse, index) =>
+                        {Array.isArray(verses) && verses?.map((verse, index) =>
                             <VerseBox key={index} verse={verse} remove={deleteVerse} update={updateVerse} userId={session?.id}/>
                         )}
                     </>
@@ -52,7 +67,7 @@ export default function HomePage({ ...props }) {
                     <p>Not logged in. Redirecting...</p>
                 </>
             }
-            {status === undefined &&
+            {(status === undefined || !verses) &&
                 <>
                     Loading...
                 </>
