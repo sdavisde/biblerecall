@@ -54,7 +54,7 @@ export default function HomePage({ ...props }) {
         <div className={styles.container}>
             {status === 'authenticated' &&
                 <>
-                    <h1>User Home Page</h1>
+                    <h1>Home Page</h1>
                     <AddVerse addVerse={addVerse} books={books}/>
                     <> 
                         {Array.isArray(verses) && verses?.map((verse, index) =>

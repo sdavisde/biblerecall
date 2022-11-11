@@ -121,7 +121,7 @@ export default function AddVerse({ addVerse, books }) {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.Heading}>New Verse</h1>
+            <h2 className={styles.Heading}>New Verse</h2>
             <div className={styles.row}>
                 <input name="book" onChange={onChange} placeholder="Enter Book" list="books" className={styles.book} ref={bookInput}/>
                 <datalist id="books">

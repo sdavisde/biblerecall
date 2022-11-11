@@ -1,5 +1,6 @@
 'use client';
 
+import GoogleLogin from './(c)/GoogleLogin';
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -46,18 +47,16 @@ export default function Layout({ ...props }) {
                 {status === "unauthenticated" 
                 ?
                     <>
-                        <h2>Please Login</h2>
-                        <button onClick={() => popupCenter("/google-signin", "Sample Sign In") }>
-                            Sign In with Google
-                        </button>
+                        <h2>Welcome to Bible Recall!</h2>
+                        <p>Bible Recall is a free application meant to help everyone memorize scripture on any device.</p>
+                        <p>I hope you enjoy! Please start by signing in with your google account below:</p> 
+                        <GoogleLogin isLogin={true} signIn={() => popupCenter("/google-signin", "Sample Sign In")} />
                     </>
                 :
                     <p className={styles.message}>
                         Loading...
                     </p>
                 }
-
-
             </div>
         </main>
     )

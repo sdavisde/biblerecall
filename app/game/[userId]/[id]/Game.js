@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { useRouter } from "next/navigation";
 import Image from 'next/image';
 import Lightbox from './(c)/Lightbox';
 import ProgressBar from '../../../../components/ProgressBar';
@@ -32,6 +33,7 @@ export default function Game({ verseData }) {
     const [parity, setParity] = useState('odd');
     const [key, setKey] = useState(null);
     const [wordsCorrect, setWordsCorrect] = useState(0);
+    const router = useRouter();
     const input = useRef(null);
     const loading_time = 4000;
 
@@ -224,7 +226,7 @@ export default function Game({ verseData }) {
                 <p>
                     You&apos;ve memorized this verse. Try memorizing another one!
                 </p>
-                <Image src={loadingGif} width={218} height={149} alt=''/>
+                <Image src={loadingGif} width={100} height={75} alt=''/>
             </Lightbox>
             <Lightbox key={isTransition} control={isTransition} showClose={false} simpleLayout={true}>
                 <h1>Well Done!</h1>
@@ -233,10 +235,10 @@ export default function Game({ verseData }) {
                 </p>
                 <div className={styles.buttons}>
                     <div onClick={() => retryStep()} className={styles.retry}>
-                        <Image src={retry} width={218} height={149} alt='Retry'/>
+                        <Image src={retry} width={100} height={75} alt='Retry'/>
                     </div>
                     <div onClick={() => moveForward()} className={styles.forward}>
-                        <Image src={forward} width={218} height={149} alt='Continue'/>
+                        <Image src={forward} width={100} height={75} alt='Continue'/>
                     </div>
                 </div>
             </Lightbox>
@@ -245,7 +247,7 @@ export default function Game({ verseData }) {
                 <p>
                     You got less than 90% of this verse correct. Try mastering this step before continuing!
                 </p>
-                <Image src={loadingGif} width={218} height={149} alt=''/>
+                <Image src={loadingGif} width={100} height={75} alt=''/>
                 <div className={styles.progressBarContainer}>
                     <ProgressBar bgcolor={'#3B5249'} completed={completed} key={completed}/>
                 </div>
