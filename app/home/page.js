@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import styles from './page.module.scss';
 import VerseBox from '../../components/VerseBox';
 import AddVerse from '../(c)/AddVerse';
 import getVerses from '../(c)/getVerses';
@@ -19,12 +20,12 @@ export default function HomePage({ ...props }) {
 
         if (userId) {
             fetch(`/api/delete_verse?userId=${userId}&id=${verseId}`)
-            .then((res) => res.json())
-            .then((data) => {
-                // setLoading(true);
-                refresh();
-                // setLoading(false);
-            })
+                .then((res) => res.json())
+                .then((data) => {
+                    setTimeout(() => {
+                        refresh();
+                    }, 500);
+                })
         }
     }
     
@@ -50,7 +51,7 @@ export default function HomePage({ ...props }) {
     }
     
     return (
-        <div>
+        <div className={styles.container}>
             {status === 'authenticated' &&
                 <>
                     <h1>User Home Page</h1>

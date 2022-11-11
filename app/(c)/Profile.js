@@ -16,7 +16,6 @@ export default function Profile() {
     if (status === "authenticated") {
         return (
             <>
-                <p> Signed in as {session.user.email}</p>
                 <div className={styles.profileContainer} onMouseEnter={() => setInHover(true)} onMouseLeave={() => setInHover(false)}>
                     <Image src={session.user.image} 
                         width={50} 

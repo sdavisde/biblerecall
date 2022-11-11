@@ -1,7 +1,7 @@
 import styles from '../../styles/AddVerse.module.scss';
 import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { GetBooks, GetChapters, GetVerses } from '../../middleware/verse';
+import { GetChapters, GetVerses } from '../../middleware/verse';
 
 export default function AddVerse({ addVerse, books }) {
     const [bookId, setBookId] = useState(1);
@@ -16,13 +16,9 @@ export default function AddVerse({ addVerse, books }) {
     });
     const [chapterSelectDisabled, setChapterSelectDisabled] = useState(true);
     const [verseSelectDisabled, setVerseSelectDisabled] = useState(true);
-
-    let formSubmitted = (event) => {
-        event.preventDefault();
-        if (verse.book != '' && verse.chapterId && verse.verseId && verse.text != '') {
-            // TODO: Make this into a clear form function, also - it doesn't work yet.
-            addVerse(verse);
-            setBookId(1);
+    
+    let clearForm = () => {
+        setBookId(1);
             setChapters([]);
             setVerseList([]);
             setVerse({
@@ -32,6 +28,13 @@ export default function AddVerse({ addVerse, books }) {
                 text: '',
                 group: 'Group_2'
             })
+    };
+
+    let formSubmitted = (event) => {
+        event.preventDefault();
+        if (verse.book != '' && verse.chapterId && verse.verseId && verse.text != '') {
+            clearForm();
+            addVerse(verse);
         }
     };
 
@@ -114,7 +117,7 @@ export default function AddVerse({ addVerse, books }) {
         <div className={styles.container}>
             <h1 className={styles.Heading}>New Verse</h1>
             <div className={styles.row}>
-                <input name="book" onChange={onChange} placeholder="Enter Book" list="books" className={styles.book}/>
+                <input name="book" defaultValue={verse.book} onChange={onChange} placeholder="Enter Book" list="books" className={styles.book}/>
                 <datalist id="books">
                     {books?.map((book, key) =>
                         <option key={key} id={book.id}>{book.name}</option>

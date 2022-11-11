@@ -10,6 +10,7 @@ export default function RootLayout({ children }) {
             <head>
                 <title>Bible Recall</title>
                 <meta name="description" content="Come Memorize Some More Scripture!"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/bible.png" />
             </head>
             <body className={styles.light}>
