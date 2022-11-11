@@ -9,6 +9,7 @@ import retry from '../../../../assets/retry.png';
 import forward from '../../../../assets/forward.png';
 import $ from 'jquery';
 import styles from './Game.module.scss';
+import './text_decorations.scss';
 
 export default function Game({ verseData }) {
     const [verseComplete, setVerseComplete] = useState(false);
@@ -199,6 +200,7 @@ export default function Game({ verseData }) {
                             onChange={(e) => onChange(e)}
                             className={styles.input}
                             ref={input}
+                            autocomplete="off"
                             autoFocus />
                     </div>
                     <div className={styles.steps}>
