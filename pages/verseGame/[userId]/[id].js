@@ -92,7 +92,7 @@ export default function VerseGame({ verseData, GlobalLogin, GlobalLogout }) {
                 $(`.verse_word:nth-child(${index + 2})`).addClass('target');
 
             const target = textRefs[index];
-            const valid = target.word[0] == key.toLowerCase();
+            let valid = target.word[0] == key.toLowerCase();
 
             if (valid)
                 setWordsCorrect(prev => (prev + 1));
