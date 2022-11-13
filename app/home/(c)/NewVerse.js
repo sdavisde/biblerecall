@@ -1,9 +1,9 @@
-import styles from '../../styles/AddVerse.module.scss';
+import styles from '../../../styles/NewVerse.module.scss';
 import React, { useState, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { GetChapters, GetVerses } from '../../middleware/verse';
+import { GetChapters, GetVerses } from '../../../middleware/verse';
 
-export default function AddVerse({ addVerse, books }) {
+export default function NewVerse({ addVerse, books }) {
     const bookInput = useRef(null);
     const [bookId, setBookId] = useState(1);
     const [chapters, setChapters] = useState([]);

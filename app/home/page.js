@@ -2,15 +2,19 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState } from 'react';
 import styles from './page.module.scss';
 import VerseBox from '../../components/VerseBox';
-import AddVerse from '../(c)/AddVerse';
 import getVerses from '../(c)/getVerses';
 import getBooks from '../(c)/getBooks';
+import StationaryPill from "./(c)/StationaryPill";
+import NewVerseLightbox from './(c)/NewVerseLightbox';
 
 export default function HomePage({ ...props }) {
     const { data: session, status } = useSession();
     const router = useRouter();
+    const [ showNewVerse, setShowNewVerse ] = useState(false);
+    const [ showNewCustom, setShowNewCustom ] = useState(false);
 
     const { verses, refresh, path, error } = getVerses(session?.id);
     const { books, isLoading, isError } = getBooks();
@@ -33,7 +37,8 @@ export default function HomePage({ ...props }) {
         console.log('update');
     }
 
-    let addVerse = (verse) => {
+    let newVerse = (verse) => {
+        setShowNewVerse(false);
         const userId = session.id;
 
         if (userId) { // User is logged in
@@ -46,6 +51,10 @@ export default function HomePage({ ...props }) {
         }
     }
 
+    let newCustom = (verse) => {
+        console.log(`add custom verse`);
+    }
+
     if (status === 'unauthenticated') {
         router.push('/');
     }
@@ -55,12 +64,13 @@ export default function HomePage({ ...props }) {
             {status === 'authenticated' &&
                 <>
                     <h1>Home Page</h1>
-                    <AddVerse addVerse={addVerse} books={books}/>
+                    <NewVerseLightbox addVerse={newVerse} books={books} control={showNewVerse} toggle={setShowNewVerse}/>
                     <> 
                         {Array.isArray(verses) && verses?.map((verse, index) =>
                             <VerseBox key={index} verse={verse} remove={deleteVerse} update={updateVerse} userId={session?.id}/>
                         )}
                     </>
+                    <StationaryPill showNewVerse={() => setShowNewVerse(true)} showNewCustom={() => setShowNewCustom(true)}/>
                 </>
             }
             {status === 'unauthenticated' &&

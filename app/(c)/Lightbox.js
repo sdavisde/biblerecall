@@ -1,5 +1,5 @@
 import styles from './Lightbox.module.scss';
-import CloseButton from '../../../../../components/CloseButton';
+import CloseButton from '../../components/CloseButton';
 
 export default function Lightbox({ ...props }) {
 

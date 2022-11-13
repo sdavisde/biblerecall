@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { useRouter } from "next/navigation";
 import Image from 'next/image';
-import Lightbox from './(c)/Lightbox';
+import Lightbox from '../../../(c)/Lightbox';
 import ProgressBar from '../../../../components/ProgressBar';
 import loadingGif from '../../../../assets/loading.gif';
 import retry from '../../../../assets/retry.png';
