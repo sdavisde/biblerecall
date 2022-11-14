@@ -8,7 +8,12 @@ export default function handler(req, res) {
         
         fetch(`https://bible-go-api.rkeplin.com/v1/books/${bookId}/chapters/${chapterId}?translation=ESV`)
         .then((res) => res.json())
-        .then((data) => {
+        .then((data) => {            
+            for (var i = 0; i < data.length; i++) {
+                data[i].verse = data[i].verse.replace('"', '');
+                console.log(data[i].verse)
+            }
+
             if (data)
                 res.status(200).json(data);
             else

@@ -5,6 +5,7 @@ import { GetChapters, GetVerses } from '../../../middleware/verse';
 
 export default function NewVerse({ addVerse, books }) {
     const bookInput = useRef(null);
+    const verse2 = useRef(null);
     const [bookId, setBookId] = useState(1);
     const [chapters, setChapters] = useState([]);
     const [verseList, setVerseList] = useState([]);
@@ -12,6 +13,7 @@ export default function NewVerse({ addVerse, books }) {
         book: '',
         chapterId: null,
         verseId: null,
+        verseId2: null,
         text: '',
         group: ''
     });
@@ -19,7 +21,6 @@ export default function NewVerse({ addVerse, books }) {
     const [verseSelectDisabled, setVerseSelectDisabled] = useState(true);
     
     let clearForm = () => {
-        console.log(bookInput);
         bookInput.current.value = '';
         setBookId(1);
         setChapters([]);
@@ -28,6 +29,7 @@ export default function NewVerse({ addVerse, books }) {
             book: '',
             chapterId: null,
             verseId: null,
+            verseId2: null,
             text: '',
             group: ''
         })
@@ -44,8 +46,8 @@ export default function NewVerse({ addVerse, books }) {
         }
     };
 
-    let setVerseText = (verseId) => {
-        if (!verseId) {
+    let setVerseText = (start, end) => {
+        if (!start) {
             setVerse({
                 ...verse,
                 verseId: null,
@@ -54,14 +56,37 @@ export default function NewVerse({ addVerse, books }) {
             return;
         }
 
-        const target = verseList.find((v) => v.verseId == verseId);
-        if (target) {
-            setVerse(prev => ({
-                ...prev,
-                verseId: target.verseId,
-                text: target.verse
-            }));
+        if (end) {
+            let verseText = '';
+            const verseIds = `${start} - ${end}`;
+
+            verseList.forEach (v => {
+                if (v.verseId >= start && v.verseId <= end) {
+                    verseText += `${v.verse}` + ' ';
+                }
+            })
+
+            verseText = verseText.substring(0, verseText.length-1);
+
+            if (verseText) {
+                setVerse(prev => ({
+                    ...prev,
+                    verseId: verseIds,
+                    text: verseText
+                }));
+            }
+        } else {
+            const target = verseList.find((v) => v.verseId == start);
+
+            if (target) {
+                setVerse(prev => ({
+                    ...prev,
+                    verseId: target.verseId,
+                    text: target.verse
+                }));
+            }
         }
+
     }
 
     let bookSelected = (id, bookName) => {
@@ -109,8 +134,19 @@ export default function NewVerse({ addVerse, books }) {
                 break;
             case 'verse':
                 if (e.target.value) {
-                    let verseId = parseInt(e.target.value);
-                    setVerseText(verseId);
+                    const start = parseInt(e.target.value);
+                    setVerseText(start);
+                    verse2.current.value = `${start}`;
+                }
+                else {
+                    setVerseText();
+                }
+                break;
+            case 'verse_2':
+                if (e.target.value) {
+                    const start = verse.verseId;
+                    const end = parseInt(e.target.value);
+                    setVerseText(start, end);
                 }
                 else {
                     setVerseText();
@@ -136,7 +172,13 @@ export default function NewVerse({ addVerse, books }) {
                     )}
                 </select>
                 <span className={styles.colon}>:</span>
-                <select name="verse" onChange={onChange} defaultValue={verse.verse} className={styles.numList} disabled={verseSelectDisabled}>
+                <select name="verse" onChange={onChange} className={styles.numList} disabled={verseSelectDisabled}>
+                    <option value=''>#</option>
+                    {verseList.map((verse, key) =>
+                        <option key={key}>{verse.verseId}</option>
+                    )}
+                </select>
+                <select name="verse_2" onChange={onChange} className={styles.numList} disabled={verseSelectDisabled} ref={verse2}>
                     <option value=''>#</option>
                     {verseList.map((verse, key) =>
                         <option key={key}>{verse.verseId}</option>
