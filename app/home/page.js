@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import styles from './page.module.scss';
-import VerseBox from '../../components/VerseBox';
+import VerseBox from './(c)/VerseBox';
 import getVerses from '../(c)/getVerses';
 import getBooks from '../(c)/getBooks';
 import StationaryPill from "./(c)/StationaryPill";

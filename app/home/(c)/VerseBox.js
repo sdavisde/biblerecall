@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styles from '../styles/VerseBox.module.scss'
-import DeleteButton from './DeleteButton';
-import EditButton from './EditButton';
+import styles from './VerseBox.module.scss'
+import DeleteButton from '../../../components/DeleteButton';
+import EditButton from '../../../components/EditButton';
 import Link from 'next/link';
 
 export default function VerseBox ({ verse, remove, update, userId }) {

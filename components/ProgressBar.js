@@ -1,8 +1,3 @@
-import React, { useState } from 'react';
-import styles from '../styles/VerseBox.module.scss'
-import DeleteButton from './DeleteButton';
-import EditButton from './EditButton';
-import Link from 'next/link';
 
 export default function ProgressBar ({ bgcolor, completed }) {
     const containerStyles = {

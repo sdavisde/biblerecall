@@ -1,4 +1,4 @@
-import styles from '../../../styles/NewVerse.module.scss';
+import styles from './NewVerse.module.scss';
 import React, { useState, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { GetChapters, GetVerses } from '../../../middleware/verse';

@@ -1,4 +1,4 @@
-import styles from '../../styles/GoogleLogin.module.scss';
+import styles from './GoogleLogin.module.scss';
 import logo from '../../assets/google/logo.png';
 import Image from 'next/image';
 

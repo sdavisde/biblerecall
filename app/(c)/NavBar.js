@@ -1,7 +1,7 @@
 import Profile from './Profile';
 import Image from 'next/image';
 import bible from '../../assets/bible.png';
-import styles from '../../styles/Navbar.module.scss';
+import styles from './Navbar.module.scss';
 
 export default function Navbar({ ...props }) {
     return ( 
