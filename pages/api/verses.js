@@ -4,14 +4,13 @@
 export default function handler(req, res) {
     return new Promise((resolve, reject) => {
         const query = req.query;
-        const { bookId, chapterId } = query;
+        const { bookId, chapterId, version } = query;
         
-        fetch(`https://bible-go-api.rkeplin.com/v1/books/${bookId}/chapters/${chapterId}?translation=ESV`)
+        fetch(`https://bible-go-api.rkeplin.com/v1/books/${bookId}/chapters/${chapterId}?translation=${version}`)
         .then((res) => res.json())
         .then((data) => {            
             for (var i = 0; i < data.length; i++) {
                 data[i].verse = data[i].verse.replace('"', '');
-                console.log(data[i].verse)
             }
 
             if (data)

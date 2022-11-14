@@ -1,11 +1,15 @@
 import styles from './NewVerse.module.scss';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { GetChapters, GetVerses } from '../../../middleware/verse';
 
 export default function NewVerse({ addVerse, books }) {
     const bookInput = useRef(null);
     const verse2 = useRef(null);
+    const versions = ['ESV', 'NIV', 'NLT', 'KJV', 'ASV', 'BBE', 'DARBY', 'WEB', 'YLT']
+    const [versionChange, setVersionChange] = useState(false);
+    const [start, setStart] = useState(0);
+    const [end, setEnd] = useState(0);
     const [bookId, setBookId] = useState(1);
     const [chapters, setChapters] = useState([]);
     const [verseList, setVerseList] = useState([]);
@@ -15,11 +19,19 @@ export default function NewVerse({ addVerse, books }) {
         verseId: null,
         verseId2: null,
         text: '',
-        group: ''
+        version: 'ESV'
     });
     const [chapterSelectDisabled, setChapterSelectDisabled] = useState(true);
     const [verseSelectDisabled, setVerseSelectDisabled] = useState(true);
     
+    useEffect(() => {
+        if (versionChange) {
+            setVerseText(start, end);
+        }
+        
+        setVersionChange(false);
+    }, [verseList])
+
     let clearForm = () => {
         bookInput.current.value = '';
         setBookId(1);
@@ -96,9 +108,11 @@ export default function NewVerse({ addVerse, books }) {
         setVerse(prev => ({...prev, book: bookName }));
     }
 
-    let chapterSelected = (book_id, chapter_id) => {
-        GetVerses(book_id, chapter_id).then((data) => {
-            setVerseList(data)
+    let chapterSelected = (book_id, chapter_id, version) => {
+        if (version) setVersionChange(true);
+
+        GetVerses(book_id, chapter_id, version ?? verse.version).then((data) => {
+            setVerseList(data);
         });
         setVerse(prev => ({...prev, chapterId: chapter_id }));
     }
@@ -135,6 +149,7 @@ export default function NewVerse({ addVerse, books }) {
             case 'verse':
                 if (e.target.value) {
                     const start = parseInt(e.target.value);
+                    setStart(start);
                     setVerseText(start);
                     verse2.current.value = `${start}`;
                 }
@@ -144,13 +159,18 @@ export default function NewVerse({ addVerse, books }) {
                 break;
             case 'verse_2':
                 if (e.target.value) {
-                    const start = verse.verseId;
                     const end = parseInt(e.target.value);
+                    setEnd(end);
                     setVerseText(start, end);
                 }
                 else {
                     setVerseText();
                 }
+                break;
+            case 'version':
+                const newVersion = e.target.value;
+                chapterSelected(bookId, verse.chapterId, newVersion);
+                setVerseText(start, end);
                 break;
         }
     };
@@ -178,6 +198,7 @@ export default function NewVerse({ addVerse, books }) {
                         <option key={key}>{verse.verseId}</option>
                     )}
                 </select>
+                <span className={styles.colon}>-</span>
                 <select name="verse_2" onChange={onChange} className={styles.numList} disabled={verseSelectDisabled} ref={verse2}>
                     <option value=''>#</option>
                     {verseList.map((verse, key) =>
@@ -190,7 +211,13 @@ export default function NewVerse({ addVerse, books }) {
                     placeholder='Verse Text' 
                     value={verse.text} 
                     spellCheck="false"
-                    className={styles.verseText}/>
+                    className={styles.verseText}
+                />
+                <select name="version" onChange={onChange} className={styles.versions}>
+                    {versions.map((v, index) =>
+                        <option key={index}>{v}</option>
+                    )}
+                </select>
             </div>
             <button onClick={formSubmitted} className={styles.addBtn}>Add Verse</button>
         </div>

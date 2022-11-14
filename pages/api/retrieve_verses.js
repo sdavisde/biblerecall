@@ -6,8 +6,6 @@ export default function handler(req, res) {
         let verses = [];
         const { userId } = req.query;
 
-        console.log(`in retrieve_verses USERID: ${userId}`);
-
         // UserId > Group_2 > verses > ...
         const versesRef = collection(database, 'Users', userId, 'verses');
         getDocs(versesRef)

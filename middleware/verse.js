@@ -10,8 +10,8 @@ export function GetChapters(bookId) {
     return fetch(`/api/chapters?bookId=${bookId}`).then((res) => res.json());
 }
 
-export function GetVerses(bookId, chapterId) {
-    return fetch(`/api/verses?bookId=${bookId}&chapterId=${chapterId}`).then((res) => res.json());
+export function GetVerses(bookId, chapterId, version) {
+    return fetch(`/api/verses?bookId=${bookId}&chapterId=${chapterId}&version=${version}`).then((res) => res.json());
 }
 
 export function GetVerseText(bookId, chapterId, verseId) {
