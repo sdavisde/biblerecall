@@ -1,4 +1,5 @@
 import Profile from './Profile';
+import Menu from './Menu';
 import Image from 'next/image';
 import bible from '../../assets/bible.png';
 import styles from './Navbar.module.scss';
@@ -13,6 +14,7 @@ export default function Navbar({ ...props }) {
             </div>
             <div className={styles.loginContainer}>
                 <Profile />
+                <Menu />
             </div>
         </nav>
     )

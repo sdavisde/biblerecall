@@ -1,0 +1,39 @@
+@import 'styles/Colors.scss';
+@import 'styles/Fonts.scss';
+@import 'styles/Breakpoints.scss';
+
+.container {
+    width: 100%;
+    position: relative;
+
+    .icon {
+        border-radius: 8px;
+
+        &:hover {
+            background-color: $tan;
+        }
+    }
+
+    .menu {
+        background-color: $tertiary_color;
+        position: absolute;
+        z-index: 10;
+        top: 100%;
+        right: 10%;
+        width: 300%;
+        height: 300%;
+        border-radius: 8px;
+        border: 2px solid $secondary_color;
+
+        .logOut {
+            color: $dark-font-color;
+            border: none;
+            text-decoration: underline;
+            background-color: transparent;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

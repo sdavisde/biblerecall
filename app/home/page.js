@@ -61,14 +61,15 @@ export default function HomePage({ ...props }) {
         router.push('/');
     }
     
-    let sort = (verses, sortStyle) => {
+    let sort = (sortStyle) => {
         switch (sortStyle) {
             case "biblical":
-                verses.sort(biblical);
+                verses?.sort(biblical);
+                break;
         }
-
-        return verses;
     }
+
+    sort(sortStyle);
 
     return (
         <div className={styles.container}>
@@ -77,7 +78,7 @@ export default function HomePage({ ...props }) {
                     <h1>Home Page</h1>
                     <NewVerseLightbox addVerse={newVerse} books={books} control={showNewVerse} toggle={setShowNewVerse}/>
                     <> 
-                        {Array.isArray(verses) && sort(verses)?.map((verse, index) =>
+                        {Array.isArray(verses) && verses?.map((verse, index) =>
                             <VerseBox key={index} verse={verse} remove={deleteVerse} update={updateVerse} userId={session?.id}/>
                         )}
                     </>

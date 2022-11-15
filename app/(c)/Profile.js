@@ -11,23 +11,16 @@ import { useSession, signOut } from "next-auth/react";
 
 export default function Profile() {
     const { data: session, status } = useSession();
-    const [ inHover, setInHover ] = useState(false);
 
     if (status === "authenticated") {
         return (
             <>
-                <div className={styles.profileContainer} onMouseEnter={() => setInHover(true)} onMouseLeave={() => setInHover(false)}>
+                <div className={styles.profileContainer}>
                     <Image src={session.user.image} 
                         width={50} 
                         height={50} 
                         alt='Profile Pic' 
                         className={styles.image}/>
-                    
-                    {inHover &&
-                        <button onClick={() => signOut({ callbackUrl: '/' })}>
-                            Sign out
-                        </button>
-                    }
                 </div>
             </>
         )
