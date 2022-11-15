@@ -41,12 +41,17 @@ export default function Menu() {
                 <Image src={icon} width={50} height={50} onClick={() => setMenuOpen(!menuOpen)} className={styles.icon} alt='menu'/>
                 {menuOpen &&
                 <div className={styles.menu}>
-                    <button className={styles.study} onClick={() => studyPress()}>
-                        Study Mode: {studyMode}
-                    </button>
-                    <button className={styles.logOut} onClick={() => signOut({ callbackUrl: '/' })}>
-                        Sign out
-                    </button>
+                    <div className={styles.menuSection} onClick={() => studyPress()}>
+                        <div className={styles.studyTitle}>
+                            Study Mode: 
+                        </div>
+                        <p className={styles.studyMode}>{studyMode}</p>
+                    </div>
+                    <div className={styles.menuSection} onClick={() => signOut({ callbackUrl: '/' })}>
+                        <div className={styles.logOut} >
+                            Sign out
+                        </div>
+                    </div>
                 </div>
                 }
             </div>

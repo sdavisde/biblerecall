@@ -17,6 +17,8 @@
     .menu {
         display: flex;
         flex-direction: column;
+        justify-content: space-around;
+
         background-color: $tertiary_color;
         position: absolute;
         z-index: 10;
@@ -27,18 +29,36 @@
         border-radius: 8px;
         border: 2px solid $secondary_color;
 
-        .study {
-            width: 100%;
-        }
+        padding: 5px;
 
-        .logOut {
-            color: $dark-font-color;
-            border: none;
-            text-decoration: underline;
-            background-color: transparent;
+        .menuSection {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
 
-            &:hover {
-                cursor: pointer;
+            .studyTitle {
+                width: 100%;
+                background-color: transparent;
+                border: 0px solid $secondary_color;
+                color: $dark-font-color;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .studyMode {
+                color: $dark-font-color;
+            }
+    
+            .logOut {
+                color: $dark-font-color;
+                border: none;
+                text-decoration: underline;
+                background-color: transparent;
+    
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
     }
