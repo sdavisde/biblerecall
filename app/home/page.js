@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import styles from './page.module.scss';
+import { biblical } from './(s)/sorting.js';
 import VerseBox from './(c)/VerseBox';
 import getVerses from '../(c)/getVerses';
 import getBooks from '../(c)/getBooks';
@@ -15,10 +16,11 @@ export default function HomePage({ ...props }) {
     const router = useRouter();
     const [ showNewVerse, setShowNewVerse ] = useState(false);
     const [ showNewCustom, setShowNewCustom ] = useState(false);
+    const [ sortStyle, setSortStyle ] = useState("biblical");
 
     const { verses, refresh, path, error } = getVerses(session?.id);
     const { books, isLoading, isError } = getBooks();
-
+    
     let deleteVerse = (verseId) => {
         const userId = session.id;
 
@@ -59,6 +61,15 @@ export default function HomePage({ ...props }) {
         router.push('/');
     }
     
+    let sort = (verses, sortStyle) => {
+        switch (sortStyle) {
+            case "biblical":
+                verses.sort(biblical);
+        }
+
+        return verses;
+    }
+
     return (
         <div className={styles.container}>
             {status === 'authenticated' &&
@@ -66,7 +77,7 @@ export default function HomePage({ ...props }) {
                     <h1>Home Page</h1>
                     <NewVerseLightbox addVerse={newVerse} books={books} control={showNewVerse} toggle={setShowNewVerse}/>
                     <> 
-                        {Array.isArray(verses) && verses?.map((verse, index) =>
+                        {Array.isArray(verses) && sort(verses)?.map((verse, index) =>
                             <VerseBox key={index} verse={verse} remove={deleteVerse} update={updateVerse} userId={session?.id}/>
                         )}
                     </>
