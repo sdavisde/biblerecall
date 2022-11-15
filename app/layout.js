@@ -2,6 +2,7 @@
 
 import Navbar from './(c)/NavBar';
 import AuthContext from './(c)/AuthContext';
+import { SettingsProvider } from './(c)/SettingsContext';
 import styles from './layout.module.scss';
 
 export default function RootLayout({ children }) {
@@ -15,10 +16,12 @@ export default function RootLayout({ children }) {
             </head>
             <body className={styles.light}>
                 <AuthContext>
-                    <Navbar />
-                    <div className={styles.pageContainer}>
-                        {children}
-                    </div>
+                    <SettingsProvider>
+                        <Navbar />
+                        <div className={styles.pageContainer}>
+                            {children}
+                        </div>
+                    </SettingsProvider>
                 </AuthContext>
             </body>
         </html>

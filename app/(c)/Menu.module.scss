@@ -16,6 +16,7 @@
 
     .menu {
         display: flex;
+        flex-direction: column;
         background-color: $tertiary_color;
         position: absolute;
         z-index: 10;
@@ -25,6 +26,10 @@
         height: 300%;
         border-radius: 8px;
         border: 2px solid $secondary_color;
+
+        .study {
+            width: 100%;
+        }
 
         .logOut {
             color: $dark-font-color;
