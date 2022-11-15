@@ -15,6 +15,7 @@
     }
 
     .menu {
+        display: flex;
         background-color: $tertiary_color;
         position: absolute;
         z-index: 10;
