@@ -1,9 +1,8 @@
-@import 'styles/Colors.scss';
 @import 'styles/Fonts.scss';
 @import 'styles/Breakpoints.scss';
 
 .main {
-    background-color: $primary_background;
+    background-color: var(--background);
     background-size:16px 16px;
 
     min-height: 100vh;
@@ -30,7 +29,7 @@
         font-family: $Aboreto_font;
         line-height: 1.15;
         font-size: 260%;
-        color: $dark-font-color;
+        color: var(--text-fourth);
 
         margin-top:0;
 
@@ -52,8 +51,4 @@
             width: 100%;
         }
     }
-}
-
-.message {
-    // color: $font-color;
 }

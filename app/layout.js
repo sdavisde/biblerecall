@@ -3,9 +3,10 @@
 import Navbar from './(c)/NavBar';
 import AuthContext from './(c)/AuthContext';
 import { SettingsProvider } from './(c)/SettingsContext';
-import styles from './layout.module.scss';
+import './globals.scss'
 
 export default function RootLayout({ children }) {
+
     return (
         <html>
             <head>
@@ -14,11 +15,11 @@ export default function RootLayout({ children }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/bible.png" />
             </head>
-            <body className={styles.light}>
+            <body data-theme='light'>
                 <AuthContext>
                     <SettingsProvider>
                         <Navbar />
-                        <div className={styles.pageContainer}>
+                        <div className='pageContainer'>
                             {children}
                         </div>
                     </SettingsProvider>

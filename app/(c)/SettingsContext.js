@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react'
 
 export const settings = {
     default: {
-        study_mode: 0
+        study_mode: 0,
+        theme: 'light'
     }
 }
 
@@ -18,12 +19,22 @@ export const useSettings = () => useContext(SettingsContext)
 */
 export const SettingsProvider = ({ children }) => {
     const [settings, setSettings] = useState({
-        study_mode: 0
+        study_mode: 0,
+        theme: 'light'
     })
 
     return (
         <SettingsContext.Provider value={{ settings, setSettings }}>
             {children}
         </SettingsContext.Provider>
+    )
+}
+
+export function SettingsWrapper({ children }) {
+
+    return (        
+        <div data-theme={settings?.theme}>
+            {children}
+        </div>
     )
 }

@@ -1,11 +1,9 @@
-@import './Colors.scss';
-
 .addBtn {
-    color: $font-color;
-    background-color: $tertiary_background;
+    color: var(--text-secondary);
+    background-color: var(--background-secondary);
     min-width: fit-content;
     width: 10%;
-    border: 1px solid $secondary_color;
+    border: 1px solid $var(--border);
     border-radius: 5px;
     cursor: pointer;
     font-size: 20px;
@@ -14,6 +12,6 @@
     justify-content: center;
 
     &:hover {
-        background-color: $secondary_background_faded;
+        background-color: var(--background-secondary-faded);
     }
 }

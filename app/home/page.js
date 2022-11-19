@@ -2,25 +2,51 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSettings } from '../(c)/SettingsContext';
 import styles from './page.module.scss';
 import { biblical } from './(s)/sorting.js';
 import VerseBox from './(c)/VerseBox';
 import getVerses from '../(c)/getVerses';
 import getBooks from '../(c)/getBooks';
+import getUserSettings from '../(c)/getUserSettings';
 import StationaryPill from "./(c)/StationaryPill";
 import NewVerseLightbox from './(c)/NewVerseLightbox';
 
 export default function HomePage({ ...props }) {
     const { data: session, status } = useSession();
+    const { settings, setSettings } = useSettings();
     const router = useRouter();
     const [ showNewVerse, setShowNewVerse ] = useState(false);
     const [ showNewCustom, setShowNewCustom ] = useState(false);
     const [ sortStyle, setSortStyle ] = useState("biblical");
 
     const { verses, refresh, path, error } = getVerses(session?.id);
-    const { books, isLoading, isError } = getBooks();
+    const { books, isLoading: books_loading, isError } = getBooks();
+    const { user_settings, settings_loading, settings_error } = getUserSettings(session?.id);
     
+    useEffect(() => {
+        if (user_settings) {
+            const user_theme = user_settings['theme']; 
+            const user_study = user_settings['study_mode'];
+
+            console.log(`user-theme: ${user_theme}`)
+            console.log(`theme: ${settings?.theme}`)
+            console.log(`user-study: ${user_study}`)
+            console.log(`studyMode: ${settings?.study_mode}`)
+            
+            if (user_theme && settings?.theme != user_theme) {
+                document.body.dataset.theme = user_theme;
+                setSettings(prev => ({...prev, theme: user_theme}))
+            }
+
+            if (user_study && settings?.study_mode != user_study) {
+                setSettings(prev => ({...prev, study_mode: user_study}))
+            }
+        }
+    }, [user_settings])
+
+
     let deleteVerse = (verseId) => {
         const userId = session.id;
 

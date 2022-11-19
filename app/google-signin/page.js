@@ -8,7 +8,7 @@ const SignInPage = () => {
 
     useEffect(() => {
         if (!(status === "loading") && !session) void signIn("google");
-        if (session) window.close();
+        if (session) window?.close();
     }, [session, status]);
 
     return (

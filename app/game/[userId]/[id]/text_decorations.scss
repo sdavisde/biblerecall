@@ -1,20 +1,16 @@
-@import '../../../../styles/Colors.scss';
-
 .wrong {
-    color: $red;
+    color: var(--alert);
 }
 
 .right {
-    color: $dark-font-color;
+    color: var(--text-primary);
 }
 
 .hidden {
-    color: $primary_background;
+    color: var(--background);
 }
 
 .target::first-letter {
     text-decoration: underline;
     text-decoration-color: black;
-    // text-underline-position: under;
-    // text-decoration-style: solid;
 }

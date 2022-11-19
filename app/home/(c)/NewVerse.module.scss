@@ -1,4 +1,3 @@
-@import 'styles/Colors.scss';
 @import 'styles/Fonts.scss';
 @import 'styles/Breakpoints.scss';
 
@@ -17,7 +16,7 @@
 }
 
 .Heading {
-    color: $dark-font-color;
+    color: var(--text-primary);
 }
 
 .verseRowContainer {
@@ -35,8 +34,8 @@
 
     .book {
         max-width: 50%;
-        color: $darker-font-color;
-        border : 0px solid $grey;
+        color: var(--text-fourth);
+        border : 0px solid var(--underline);
         border-bottom-width : 1px;
         background-color : transparent;
         font-size: 16px;
@@ -44,16 +43,16 @@
 
     .numList {
         min-width: 13%;
-        text-align:center;
-        color: $darker-font-color;
-        border : 0px solid $grey;
+        text-align: center;
+        color: var(--text-fourth);
+        border : 0px solid var(--underline);
         border-bottom-width : 1px;
         background-color : transparent;
         font-size: 16px;
 
         &[disabled] {
-            color: $dark-font-color;
-            background-color: #cec9b2;
+            color: var(--text-primary);
+            background-color: var(--background-faded);
             cursor: not-allowed;
         }
     }
@@ -66,7 +65,7 @@
     .versions {
         width: 15%;
         background-color: transparent;
-        border : 0px solid $grey;
+        border : 0px solid var(--underline);
         border-bottom-width : 1px;
         text-align: center;
 
@@ -76,28 +75,28 @@
 }
 
 .colon {
-    color: $darker-font-color;
+    color: var(--text-fourth);
 }
 
 .addBtn {
-    color: $font-color;
-    background-color: $tertiary_background;
+    color: var(--text-secondary);
+    background-color: var(--background-secondary);
     min-width: inherit;
-    border: 3px solid $tertiary_background;
+    border: 3px solid var(--background-secondary);
     border-radius: 5px;
     cursor: pointer;
     
     &:hover {
-        background-color: $secondary_background_faded;
+        background-color: var(--background-secondary-faded);
     }
 }
 
 .verseText {
     width: 85%;
-    color: $darker-font-color;
+    color: var(--text-fourth);
 
     background-color: transparent;
-    border : 0px solid $grey;
+    border : 0px solid var(--underline);
     border-bottom-width : 1px;
     background-color : transparent;
 
