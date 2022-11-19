@@ -24,10 +24,23 @@ body {
 }
 
 [data-theme='dark'] {
-    --background: black;
-    --text-primary: white;
-    --text-secondary: grey;
-    --accent: darkred;
+    --background: #121212;
+    --background-faded: #202020;
+    --background-secondary: #292929;
+    --background-secondary-faded: #4e4e4e;
+    --background-tertiary: #242424;
+    --border: #292929;
+    --text-primary: #A49E8D;
+    --text-secondary: #D3D4D9;
+    --text-tertiary: #7e968d;
+    --text-fourth: #d6d6d6;
+    --accent: rgb(68,17,14);
+    --accent-faded: rgb(109, 57, 55);
+    
+    --underline: #A7A6A2;
+    --alert: #A49E8D;
+    --alert-dark: #807b6d;
+    --white: #fef5e2;
 }
 
 [data-theme='light'] {
