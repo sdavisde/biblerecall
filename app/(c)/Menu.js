@@ -53,7 +53,11 @@ export default function Menu() {
     return (
         <>
             <div className={styles.container}>
-                <Image src={icon} width={50} height={50} onClick={() => setMenuOpen(!menuOpen)} className={styles.icon} alt='menu'/>
+                <div height={50} onClick={() => setMenuOpen(!menuOpen)} className={styles.icon}>
+                    <div/>
+                    <div/>
+                    <div/>
+                </div>
                 {menuOpen &&
                 <div className={styles.menu}>
                     <div className={styles.menuSection} onClick={() => themeChange()}>

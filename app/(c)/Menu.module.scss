@@ -8,8 +8,19 @@
     .icon {
         border-radius: 8px;
 
+        div {
+            width: 35px;
+            height: 5px;
+            border-radius: 5px;
+            background-color: var(--background-secondary);
+            margin: 6px 0;
+        }
+
+
         &:hover {
-            background-color: var(--background-tertiary);
+            div {
+                background-color: var(--background-secondary-faded);
+            }
         }
     }
 
@@ -23,7 +34,7 @@
         z-index: 10;
         top: 100%;
         right: 10%;
-        width: 300%;
+        width: 500%;
         height: 300%;
         border-radius: 8px;
         border: 2px solid var(--border);
