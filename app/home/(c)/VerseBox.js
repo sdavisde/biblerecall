@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import styles from './VerseBox.module.scss'
 import DeleteButton from '../../../components/DeleteButton';
 import EditButton from '../../../components/EditButton';
-import { useSettings } from '../../(c)/SettingsContext';
+import useLocalStorage from 'use-local-storage';
 import Link from 'next/link';
 
 export default function VerseBox ({ verse, remove, update, userId }) {
-    const { settings, setSettings } = useSettings();
-    const [inHoverState, setInHoverState] = useState(false);
+    const [ studyMode, setStudyMode ] = useLocalStorage("studyMode", 0);
+    const [ inHoverState, setInHoverState ] = useState(false);
 
     let showFirstLetters = (text) => {
         const words = text.split(' ');
@@ -36,17 +36,17 @@ export default function VerseBox ({ verse, remove, update, userId }) {
                     <h2>
                         {verse.book} {verse.chapter} : {verse.verse} <br/>
                     </h2>
-                    {settings?.study_mode === 0 &&
+                    {studyMode === 0 &&
                         <p>
                             {verse.text}
                         </p>
                     }
-                    {settings?.study_mode === 1 &&
+                    {studyMode === 1 &&
                         <p>
                             {showFirstLetters(verse.text)}
                         </p>
                     }
-                    {settings?.study_mode === 2 &&
+                    {studyMode === 2 &&
                         <p>
                             {showStars(verse.text)}
                         </p>

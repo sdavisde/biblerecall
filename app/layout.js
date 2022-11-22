@@ -2,10 +2,11 @@
 
 import Navbar from './(c)/NavBar';
 import AuthContext from './(c)/AuthContext';
-import { SettingsProvider } from './(c)/SettingsContext';
+import useLocalStorage from 'use-local-storage';
 import './globals.scss'
 
 export default function RootLayout({ children }) {
+    const [theme, setTheme] = useLocalStorage('theme', 'light');
 
     return (
         <html>
@@ -15,14 +16,12 @@ export default function RootLayout({ children }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/bible.png" />
             </head>
-            <body data-theme='light'>
+            <body data-theme={theme}>
                 <AuthContext>
-                    <SettingsProvider>
                         <Navbar />
                         <div className='pageContainer'>
                             {children}
                         </div>
-                    </SettingsProvider>
                 </AuthContext>
             </body>
         </html>

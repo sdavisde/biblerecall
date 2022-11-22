@@ -1,14 +1,20 @@
 'use client';
 
 import GoogleLogin from './(c)/GoogleLogin';
-import { useSession, signIn } from "next-auth/react";
+import { useEffect } from 'react';
+import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import useLocalStorage from 'use-local-storage';
 import styles from './page.module.scss';
 
 export default function Layout({ ...props }) {
     const { data: session, status } = useSession();
+    const [theme, setTheme] = useLocalStorage('theme', 'light');
     const router = useRouter();
+
+    useEffect(() => {
+        document.body.dataset.theme = theme;
+    }, [theme])
 
     const popupCenter = (url, title) => {
         const dualScreenLeft = window.screenLeft ?? window.screenX;
@@ -36,7 +42,7 @@ export default function Layout({ ...props }) {
     };
 
     // * Redirect to user page before cover page is rendered
-    if (status === "authenticated") { 
+    if (status === "authenticated") {
         router.push('/home');
     }
 

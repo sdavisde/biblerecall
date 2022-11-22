@@ -1,13 +1,11 @@
 'use client';
 
-import { useSettings } from './SettingsContext';
-import icon from '../../assets/menu.png';
-import Image from 'next/image';
+import useLocalStorage from 'use-local-storage';
 import styles from './Menu.module.scss';
 import { useEffect, useState } from 'react';
 import { useSession, signOut } from "next-auth/react";
 
-function SaveSettings(userId, theme, study_mode) {
+function SaveUserSettings(userId, theme, study_mode) {
     fetch(`/api/save_settings?userId=${userId}&theme=${theme}&study_mode=${study_mode}`);
 }
 
@@ -17,14 +15,14 @@ function SaveSettings(userId, theme, study_mode) {
 
 export default function Menu() {
     const { data: session, status } = useSession();
-    const { settings, setSettings } = useSettings();
-
+    const [ theme, setTheme ] = useLocalStorage("theme", "light");
+    const [ studyMode, setStudyMode ] = useLocalStorage("studyMode", 0);
     const [ menuOpen, setMenuOpen ] = useState(false);
 
     useEffect(() => {
-        if (document.body.dataset.theme != settings.theme) {
-            console.log(`setting doc body to: ${settings.theme}`)
-            document.body.dataset.theme = settings.theme
+        if (document.body.dataset.theme != theme) {
+            console.log(`setting doc body to: ${theme}`)
+            document.body.dataset.theme = theme;
         }
 
         // Menu open / close logic
@@ -38,16 +36,16 @@ export default function Menu() {
     }, [])
 
     let studyPress = () => {
-        const new_mode = (settings?.study_mode + 1) % 4;
-        SaveSettings(session?.id, settings.theme, new_mode);
-        setSettings(prev => ({...prev, study_mode: new_mode}));
+        const new_mode = (studyMode + 1) % 4;
+        SaveUserSettings(session?.id, theme, new_mode);
+        setStudyMode(new_mode);
     }
 
     let themeChange = () => {
-        const new_mode = settings?.theme == 'dark' ? 'light' : 'dark';
+        const new_mode = theme == 'dark' ? 'light' : 'dark';
         document.body.dataset.theme = new_mode;
-        SaveSettings(session?.id, new_mode, settings.study_mode);
-        setSettings(prev => ({...prev, theme: new_mode}));
+        SaveUserSettings(session?.id, new_mode, studyMode);
+        setTheme(new_mode);
     }
 
     return (
@@ -64,13 +62,13 @@ export default function Menu() {
                         <div className={styles.studyTitle} >
                             Color Mode:
                         </div>
-                        <p className={styles.studyMode}>{settings?.theme}</p>
+                        <p className={styles.studyMode}>{theme}</p>
                     </div>
                     <div className={styles.menuSection} onClick={() => studyPress()}>
                         <div className={styles.studyTitle}>
                             Study Mode: 
                         </div>
-                        <p className={styles.studyMode}>{settings?.study_mode}</p>
+                        <p className={styles.studyMode}>{studyMode}</p>
                     </div>
                     <div className={styles.menuSection} onClick={() => signOut({ callbackUrl: '/' })}>
                         <div className={styles.logOut} >
