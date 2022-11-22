@@ -18,10 +18,10 @@ export default function RootLayout({ children }) {
             </head>
             <body data-theme={theme}>
                 <AuthContext>
-                        <Navbar />
-                        <div className='pageContainer'>
-                            {children}
-                        </div>
+                    <Navbar />
+                    <div className='pageContainer'>
+                        {children}
+                    </div>
                 </AuthContext>
             </body>
         </html>
