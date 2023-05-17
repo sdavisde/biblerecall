@@ -38,7 +38,7 @@ export default function Layout({ ...props }) {
             `width=${500 / systemZoom},height=${550 / systemZoom},top=${top},left=${left}`
         );
 
-        newWindow?.focus();
+        newWindow?.focus()
     };
 
     // * Redirect to user page before cover page is rendered
